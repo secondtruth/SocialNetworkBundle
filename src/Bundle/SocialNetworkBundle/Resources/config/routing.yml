@@ -1,0 +1,23 @@
+kiboko_social_network_user_admin:
+    resource: "@KibokoSocialNetworkBundle/Resources/config/routing/user-admin.yml"
+    prefix:   /admin/users
+
+kiboko_social_network_admin:
+    resource: "@KibokoSocialNetworkBundle/Resources/config/routing/admin.yml"
+    prefix:   /admin
+
+kiboko_social_network_friendship:
+    resource: "@KibokoSocialNetworkBundle/Resources/config/routing/friendship.yml"
+    prefix:   /friends/
+
+kiboko_social_network_messenger:
+    resource: "@KibokoSocialNetworkBundle/Resources/config/routing/messenger.yml"
+    prefix:	  /messenger/
+
+kiboko_social_network_user:
+    resource: "@KibokoSocialNetworkBundle/Resources/config/routing/user.yml"
+    prefix:   /
+
+kiboko_social_network_front:
+    resource: "@KibokoSocialNetworkBundle/Resources/config/routing/front.yml"
+    prefix:   /

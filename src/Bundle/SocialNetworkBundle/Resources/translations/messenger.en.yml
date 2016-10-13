@@ -1,0 +1,55 @@
+kiboko_social:
+  socialnetwork:
+    header_link:              Messenger
+    title:                    Messenger
+    legend:                   Messenger
+    new_message_button:       New message
+    remove_button:            Remove
+    no_message:               You have no message
+    back_to_messages_list:    Back
+    new_message:
+      title:                  New message
+      legend:                 New message
+      to:
+        label:                To
+        required:             Please type a target name
+      subject:
+        label:                Message subject
+        not_blank:            Subject is required
+      content:
+        label:                Message content
+        not_blank:            Content is required
+      file:
+        label:                Join a file
+        select:               Select a file
+        remove:               Remove
+        change:               Change
+        download:             Download file
+      send:                   Send
+      no_friend_found:        No friend with that name has been found
+      success_msg:            Your message has been sent successfully !
+    answer_message:
+      title:                  Message
+      answer:
+        label:                Your answer
+      file:
+        label:                Join a file
+        select:               Select a file
+        remove:               Remove
+        change:               Change
+        download:             Download file
+      send_button:            Send
+      success_msg:            Your answer has been sent successfully !
+    remove_message:
+      confirm_msg:            Do you really want to remove this message ?
+      success_msg:            Your message has been removed successfully !
+    email:
+      message:
+        subject:              New message from %username%
+        text:                 %username% wrotes
+        html:                 %username% wrotes
+      answer:
+        subject:              New answer of "%message_subject%" message
+        text:                 |
+                              %username% has answered to "%message_subject%"
+        html:                 %username% has answered to "%message_subject%"

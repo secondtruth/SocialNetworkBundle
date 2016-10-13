@@ -1,23 +1,32 @@
 {
-    "name": "fulgurio/social-network-bundle",
+    "name": "kiboko/social-network-bundle",
     "type": "symfony-bundle",
-    "description": "Symfony FulgurioSocialNetworkBundle",
+    "description": "Symfony SocialNetworkBundle, derived from fulgurio/social-network-bundle",
     "keywords": ["Social network"],
     "license": "GPL",
     "authors": [
         {
             "name": "Vincent GUERARD",
             "email": "v.guerard@fulgurio.net"
+        },
+        {
+            "name": "Grégory Planchat",
+            "email": "gregory@kiboko.fr"
         }
     ],
     "require": {
-        "php": ">=5.3.2",
-        "symfony/framework-bundle": "2.0.*",
-        "friendsofsymfony/user-bundle": "1.2.0",
-        "stof/doctrine-extensions-bundle": "1.0.x"
+        "php": "~7.0.0",
+        "symfony/framework-bundle": "~3.1.0",
+        "friendsofsymfony/user-bundle": "dev-master",
+        "stof/doctrine-extensions-bundle": "~1.2.0",
+        "symfony/twig-bridge": "^3.1",
+        "doctrine/doctrine-bundle": "^1.6",
+        "doctrine/orm": "^2.5"
     },
     "autoload": {
-        "psr-0": { "Fulgurio\\SocialNetworkBundle": "" }
+        "psr-4": { "Kiboko\\Bundle\\SocialNetworkBundle\\": "src/Bundle/SocialNetworkBundle/" }
     },
-    "target-dir": "Fulgurio/SocialNetworkBundle"
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^1.12"
+    }
 }

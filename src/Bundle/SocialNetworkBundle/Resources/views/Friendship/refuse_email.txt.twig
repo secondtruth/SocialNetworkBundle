@@ -1,0 +1,3 @@
+{% autoescape false %}
+{% trans with { '%current_username%' : app.user.username, '%username%' : user.username, '%link%' : url('kiboko_social_network_friendship_list') } from 'friendship' %}kiboko_social.socialnetwork.refuse.email.text{% endtrans %}
+{% endautoescape %}

@@ -1,0 +1,33 @@
+{% extends 'KibokoSocialNetworkBundle::base.html.twig' %}
+
+{% block title %}{{ parent() }} - {% trans %}kiboko_social.socialnetwork.profile.title{% endtrans %}{% endblock %}
+
+{% block content %}
+<section>
+	<img class="pull-left" src="{{ avatar(user) }}" alt="" />
+{% if user == app.user %}
+	<p>{% trans %}kiboko_social.socialnetwork.profile.username{% endtrans %}: {{ user.username }}</p>
+	<p>{% trans %}kiboko_social.socialnetwork.profile.email{% endtrans %}: {{ user.email }}</p>
+	<p>{% trans with { '%date%': user.createdAt|date('kiboko_social.socialnetwork.format_date'|trans) } %}kiboko_social.socialnetwork.profile.registered_date{% endtrans %}</p>
+	<a href="{{ path('fos_user_profile_edit') }}">{% trans %}kiboko_social.socialnetwork.profile.edit_profil.link{% endtrans %}</a>
+	<a href="{{ path('kiboko_social_network_unsubscribe') }}">{% trans %}kiboko_social.socialnetwork.profile.unsubscribe.link{% endtrans %}</a>
+{% else %}
+	<p>{% trans from 'friendship' %}kiboko_social.socialnetwork.profile.username{% endtrans %}: {{ user.username }}</p>
+{%   if areFriend %}
+{#	<p>{% trans %}kiboko_social.socialnetwork.profile.lastname_and_firstname{% endtrans %}: {{ user.lastname }} {{ user.firstname }}</p>#}
+	<p>{% trans from 'friendship' %}kiboko_social.socialnetwork.profile.email{% endtrans %}: {{ user.email }}</p>
+{%   endif %}
+	<p>{% trans with { '%date%': user.createdAt|date('kiboko_social.socialnetwork.format_date'|trans) } %}kiboko_social.socialnetwork.profile.registered_date{% endtrans %}</p>
+{%   if areFriend %}
+{#	<a href="{{ path('MessengerNewMessageToFriend', { userId : user.id }) }}" class="btn"><i class="icon-envelope"></i> {% trans %}kiboko_social.socialnetwork.messenger.write_to_him{% endtrans %}</a>#}
+	<a href="{{ path('kiboko_social_network_friendship_refuse', {userId: user.id}) }}" class="btn">{% trans from 'friendship' %}kiboko_social.socialnetwork.remove_link{% endtrans %}</a>
+{%   else %}
+{%     if havePendingInvit %}
+	{% trans from 'friendship' %}kiboko_social.socialnetwork.invitation.pending{% endtrans %}
+{%     else %}
+	<a href="{{ path('kiboko_social_network_friendship_invit', { userId : user.id }) }}" class="btn"><i class="icon-user"></i> {% trans from 'friendship' %}kiboko_social.socialnetwork.add.as_friend{% endtrans %}</a>
+{%     endif %}
+{%   endif %}
+{% endif %}
+</section>
+{% endblock %}

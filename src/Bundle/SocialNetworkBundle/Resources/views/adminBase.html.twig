@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" href="{{ asset('bundles/kiboko_socialsocialnetwork/css/bootstrap.css') }}" />
+	<link rel="stylesheet" href="{{ asset('bundles/kiboko_socialsocialnetwork/css/styles-admin.css') }}" />
+	<script src="{{ asset('bundles/kiboko_socialsocialnetwork/js/jquery-1.7.2.min.js') }}"></script>
+	<script src="{{ asset('bundles/kiboko_socialsocialnetwork/js/bootstrap.min.js') }}"></script>
+	<title>{% block title %}{% trans from "admin" %}kiboko_social.socialnetwork.social_network_title{% endtrans %}{% endblock %}</title>
+{% block javascriptTop %}{% endblock %}
+</head>
+<body>
+<div class="container">
+	<header class="navbar navbar-inverse navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container">
+				<a class="brand" href="{{ path('kiboko_social_network_homepage') }}">{% trans from 'admin' %}kiboko_social.socialnetwork.social_network_title{% endtrans %}</a>
+				<div class="nav-collapse">
+					<ul class="nav">
+{#							<li{% if app.request.attributes.get('_route')|slice(0, 10) == 'AdminPages' %} class="active"{% endif %}><a href="{{ path('AdminPages') }}">{% trans from "admin" %}kiboko_social.lightcms.header_link.pages_link{% endtrans %}</a></li>#}
+						<li{% if app.request.attributes.get('_route')|slice(0, 35) == 'kiboko_social_network_admin_users' %} class="active"{% endif %}><a href="{{ path('kiboko_social_network_admin_users') }}">{% trans from "admin_user" %}kiboko_social.socialnetwork.header_link{% endtrans %}</a></li>
+					</ul>
+					<ul class="nav pull-right">
+{#							<li{% if app.request.attributes.get('_route')|slice(0, 9) == 'Messenger' %} class="active"{% endif %}><a href="{{ path('MessengerList') }}"><i class="icon-envelope icon-white"></i> {% trans %}kiboko_social.socialnetwork.header_link.messenger{% endtrans %}</a></li>#}
+						<li class="dropdown" id="profil">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">{% trans with {'%username%': app.user.username} from 'admin' %}kiboko_social.socialnetwork.header_link.logged_as{% endtrans %} <b class="caret"></b></a>
+							<ul class="dropdown-menu">
+{#									<li><a href="{{ path('UserProfilShow') }}">{% trans %}kiboko_social.socialnetwork.header_link.profile{% endtrans %}</a></li>#}
+								<li><a href="{{ path('fos_user_security_logout') }}">{%trans from 'admin' %}kiboko_social.socialnetwork.header_link.disconnect{% endtrans %}</a></li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</header>
+{% if app.session.hasFlash('notice') %}	<div class="alert alert-info">{{ app.session.flash('notice') }}</div>{% endif %}
+{% if app.session.hasFlash('success') %}	<div class="alert alert-success">{{ app.session.flash('success') }}</div>{% endif %}
+{% if app.session.hasFlash('alert') %}	<div class="alert alert-error">{{ app.session.flash('alert') }}</div>{% endif %}
+{% block content %}{% endblock %}
+	<hr />
+	<footer>
+		&copy;<a href="http://www.fulgurio.net" target="_blank">Fulgurio</a>
+	</footer>
+</div>
+{% block javascriptBottom %}{% endblock %}
+{% include 'KibokoSocialNetworkBundle:Admin:popup.html.twig' %}<script>
+{% if is_granted("IS_AUTHENTICATED_FULLY") %}
+$('.dropdown-toggle').dropdown();
+$(document).ready(function() {
+	$('#myModal').on('hidden', function () {
+		$(this).removeData('modal');
+	});
+});
+{% else %}
+$('#connect a').click(function() {
+	$('#connect form').show();
+});
+{% endif %}
+</script>
+</body>
+</html>

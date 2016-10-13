@@ -1,0 +1,31 @@
+kiboko_social_network_friendship_add:
+    pattern:  /add
+    defaults: { _controller: KibokoSocialNetworkBundle:Friendship:add }
+
+kiboko_social_network_friendship_invit:
+    pattern:  /{userId}/invit
+    defaults: { _controller: KibokoSocialNetworkBundle:Friendship:invit }
+
+kiboko_social_network_friendship_accept:
+    pattern:  /{userId}/accept
+    defaults: { _controller: KibokoSocialNetworkBundle:Friendship:accept }
+
+kiboko_social_network_friendship_refuse:
+    pattern:  /{userId}/refuse
+    defaults: { _controller: KibokoSocialNetworkBundle:Friendship:refuse }
+
+kiboko_social_network_friendship_profil:
+    pattern:  /{userId}/show
+    defaults: { _controller: KibokoSocialNetworkBundle:Profile:show }
+
+kiboko_social_network_friendship_search_to_add:
+    pattern:  /searchToAdd
+    defaults: { _controller: KibokoSocialNetworkBundle:Friendship:searchToAdd }
+
+kiboko_social_network_friendship_search:
+    pattern:  /search
+    defaults: { _controller: KibokoSocialNetworkBundle:Friendship:search }
+
+kiboko_social_network_friendship_list:
+    pattern:  /
+    defaults: { _controller: KibokoSocialNetworkBundle:Friendship:list }

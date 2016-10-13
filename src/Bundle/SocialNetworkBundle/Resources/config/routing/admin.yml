@@ -1,0 +1,3 @@
+kiboko_social_network_admin_homepage:
+    pattern:  /
+    defaults: { _controller: KibokoSocialNetworkBundle:Admin:index }

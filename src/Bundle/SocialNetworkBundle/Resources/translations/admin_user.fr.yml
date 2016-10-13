@@ -1,0 +1,81 @@
+kiboko_social:
+  socialnetwork:
+    header_link:            Utilisateurs
+    user_not_found:         Utilisateur non trouvé.
+    no_result:              Aucun utilisateur trouvé.
+    list:
+      title:                Utilisateurs
+      last_login:           Dernière connexion
+      register_date:        Date d'inscription
+      username:             Identifiant
+      email:                Email
+    view:
+      title:                Infos de %username%
+      last_login:           Dernière connexion
+      register_date:        Date d'inscription
+      username:             Identifiant
+      email:                Email
+    actions:
+      ban:                  Bannir
+      unban:                Débannir
+      infos:                Infos
+      add:                  Ajouter
+      edit:                 Editer
+      remove:               Supprimer
+      search:               Rechercher
+      contact:              Contacter
+      init_password:        Réinitialisation du mot de passe
+      remove_avatar:        Supprimer l'avatar
+    add:
+      title:                Ajouter un utilisateur
+      username:
+        label:              Identifiant
+        not_blank:          Nom d'utilisateur obligatoire
+      email:
+        label:              Email
+        not_blank:          Email obligatoire
+      password:
+        label:              Mot de passe
+        not_blank:          Mot de passe obligatoire
+        no_match:           Les mots de passe ne sont pas identiques
+      password2:
+        label:              Mot de passe à confirmer
+      avatar:
+        label:              Avatar
+        select:             Sélectionner une image
+        remove:             Supprimer
+        change:             Changer
+      save_button:          Enregistrer
+      success:              Utilisateur créé !
+    edit:
+      title:                Modifier un utilisateur
+      success:              Utilisateur mis à jour !
+    remove:
+        confirm:            Etes-vous sûr de vouloir supprimer "%username%"
+        success:            "\"%username%\" est supprimé !"
+    ban:
+        confirm:            Etes-vous sûr de vouloir bannir "%username%" ?
+        success:            "\"%username%\" est banni"
+    unban:
+        confirm:            Etes-vous sûr de vouloir débannir "%username%" ?
+        success:            "\"%username%\" est débanni"
+    password_init:
+        success:            L'email de réinitialisation de mot de passe a été envoyé à %email%
+    remove_avatar:
+        confirm:            Etes-vous sûr de vouloir supprimer l'avatar de "%username%" ?
+        success:            L'avatar de "%username%" a été supprimé, un email d'avertissement a été envoyé à l'utilisateur
+        email:
+            subject:        Votre avatar a été effacé
+            message:        >
+                            Bonjour,
+                            Nous sommes navré, mais votre avatar ne respecte pas notre charte. Nous l'avons effacé, et vous pouvez réuploader un nouveau.
+    contact:
+      title:                Contact
+      sent:                 Envoyer
+      subject:
+        label:              Sujet
+        not_blank:          Le sujet est obligatoire
+      message:
+        label:              Message
+        not_blank:          Le message est obligatoire
+      success:              Votre message a bien été envoyé

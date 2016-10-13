@@ -1,0 +1,25 @@
+kiboko_social_network_messenger_new_message:
+    pattern:  /new
+    defaults: { _controller: KibokoSocialNetworkBundle:Messenger:new }
+
+kiboko_social_network_messenger_remove_message:
+    pattern:  /{msgId}/remove
+    defaults: { _controller: KibokoSocialNetworkBundle:Messenger:remove }
+    requirements:
+        msgId:  \d+
+
+kiboko_social_network_messenger_reply_message:
+    pattern:  /{msgId}/reply
+    defaults: { _controller: KibokoSocialNetworkBundle:Messenger:show }
+    requirements:
+        msgId:  \d+
+
+kiboko_social_network_messenger_show_message:
+    pattern:  /{msgId}/
+    defaults: { _controller: KibokoSocialNetworkBundle:Messenger:show }
+    requirements:
+        msgId:  \d+
+
+kiboko_social_network_messenger_list:
+    pattern:  /
+    defaults: { _controller: KibokoSocialNetworkBundle:Messenger:list }

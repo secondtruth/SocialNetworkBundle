@@ -1,0 +1,38 @@
+{% extends 'KibokoSocialNetworkBundle::base.html.twig' %}
+
+{% block title %}{% trans from 'messenger' %}kiboko_social.socialnetwork.title{% endtrans %}{% endblock %}
+
+{% block content %}
+<h1>{% trans from 'messenger' %}kiboko_social.socialnetwork.legend{% endtrans %}</h1>
+<div class="row-fluid messenger">
+	<a href="{{ path('kiboko_social_network_messenger_new_message') }}" class="btn btn-primary">{% trans from 'messenger' %}kiboko_social.socialnetwork.new_message_button{% endtrans %}</a>
+{%   if messages %}
+	<ol class="messagesList">
+{%     for message in messages %}
+		<li{% if message.has_read == FALSE %} class="hasNotRead"{% endif %}>
+			<img src="{{ avatar(message[0].sender) }}" alt="" />
+			<div>
+				<a href="{{ path('kiboko_social_network_messenger_show_message', { msgId: message[0].id }) }}" class="subject">{{ message[0].subject }}</a><br />
+				{{ message[0].sender.username|trans }}
+				<a href="{{ path('kiboko_social_network_messenger_remove_message', { msgId: message[0].id }) }}" class="pull-right btn" title="{% trans from 'messenger' %}kiboko_social.socialnetwork.remove_button{% endtrans %}"><i class="icon-trash"></i></a>
+			</div>
+		</li>
+{%     endfor %}
+	</ol>
+{%   else %}
+	<p>{% trans from 'messenger' %}kiboko_social.socialnetwork.no_message{% endtrans %}</p>
+{%   endif %}
+</div>
+{% endblock %}
+
+{% block javascriptTop %}
+	<link rel="stylesheet" href="{{ asset('bundles/kiboko_socialsocialnetwork/css/styles_messenger.css') }}" />
+{% endblock %}
+
+{% block javascriptBottom %}
+<script>
+$('.messenger ol li').click(function() {
+	window.location.href = $(this).find('a.subject').attr('href');
+});
+</script>
+{% endblock %}

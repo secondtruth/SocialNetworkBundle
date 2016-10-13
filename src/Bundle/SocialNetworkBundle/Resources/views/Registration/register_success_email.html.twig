@@ -1,0 +1,12 @@
+{% extends 'KibokoSocialNetworkBundle:Mail:base.html.twig' %}
+
+{% block subject %}
+{% trans %}kiboko_social.socialnetwork.register.email.subject{% endtrans %}
+{% endblock %}
+
+{% block content %}
+{{ user.username }},<br />
+<br />
+<p>{% trans %}kiboko_social.socialnetwork.register.email.content.html.welcome{% endtrans %}</p>
+<p>{% trans with {'%tag%' : '<a href="' ~ url('fos_user_profile_edit', { 'userId' : user.id} ) ~ '">', '%endtag%' : '</a>'} %}kiboko_social.socialnetwork.register.email.content.html.footer{% endtrans %}</p>
+{% endblock%}

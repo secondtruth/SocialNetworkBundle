@@ -1,3 +1,0 @@
-fulgurio_social_network_admin_homepage:
-    pattern:  /
-    defaults: { _controller: FulgurioSocialNetworkBundle:Admin:index }

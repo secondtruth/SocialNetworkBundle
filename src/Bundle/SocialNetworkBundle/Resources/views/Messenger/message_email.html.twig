@@ -1,0 +1,4 @@
+{% trans with { '%username%' : user.username } from 'messenger' %}kiboko_social.socialnetwork.email.message.html{% endtrans %}
+<br />
+{{ message.subject }}<br />
+<p>{{ message.content|nl2br }}</p>

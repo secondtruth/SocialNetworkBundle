@@ -1,0 +1,11 @@
+kiboko_social:
+  socialnetwork:
+    social_network_title:      Administration Réseau Social
+    format_date:               d/m/Y
+    format_date_time:          d/m/Y H:i:s
+    yes:                       Oui
+    no:                        Non
+    back:                      Retour
+    header_link:
+      logged_as:               Connecté sous %username%
+      disconnect:              Déconnecter
