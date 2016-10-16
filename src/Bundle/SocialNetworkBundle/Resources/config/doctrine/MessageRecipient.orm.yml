@@ -1,38 +1,41 @@
-Kiboko\Bundle\SocialNetworkBundle\Entity\MessageTarget:
+Kiboko\Component\SocialNetwork\Model\MessageRecipient:
   type: entity
-  table: message_target
+  table: kiboko_social_message_recipient
   fields:
     id:
       type: integer
       id: true
       generator:
         strategy: AUTO
-    has_read:
+    wasRead:
       type: boolean
+      column: was_read
       options:
         default: 0
-    created_at:
+    createdAt:
       type: datetime
+      column: created_at
       gedmo:
         timestampable:
           on: create
-    updated_at:
+    updatedAt:
       type: datetime
+      column: updated_at
       gedmo:
         timestampable:
           on: update
   manyToOne:
     message:
-      targetEntity: Message
+      targetEntity: Kiboko\Component\SocialNetwork\Model\Message
       inversedBy: target
       joinColumn:
         name: message_id
         referencedColumnName: id
         onDelete: cascade
-    target:
-      targetEntity: User
-      inversedBy: msgTarget
+    recipient:
+      targetEntity: Kiboko\Component\SocialNetwork\Model\Member
+      inversedBy: messages
       joinColumn:
-        name: target_id
+        name: member_id
         referencedColumnName: id
         onDelete: cascade

@@ -1,0 +1,41 @@
+Kiboko\Component\SocialNetwork\Model\MemberRelation:
+  type: entity
+  repositoryClass: Kiboko\Component\SocialNetwork\Repository\MemberRelationRepository
+  table: kiboko_social_member_relation
+  fields:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+    status:
+      type: string
+      length: 8
+    refusalCount:
+      type: smallint
+      columns: refusal_count
+    createdAt:
+      type: datetime
+      column: created_at
+      gedmo:
+        timestampable:
+          on: create
+    updatedAt:
+      type: datetime
+      column: updated_at
+      gedmo:
+        timestampable:
+          on: update
+  manyToOne:
+    initiator:
+      targetEntity: Kiboko\Component\SocialNetwork\Model\User
+      joinColumn:
+        name: member_initiator_id
+        referencedColumnName: id
+        onDelete: cascade
+    recipient:
+      targetEntity: Kiboko\Component\SocialNetwork\Model\User
+      joinColumn:
+        name: user_recipient_id
+        referencedColumnName: id
+        onDelete: cascade

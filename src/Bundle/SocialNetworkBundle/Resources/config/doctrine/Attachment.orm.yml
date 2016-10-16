@@ -1,0 +1,50 @@
+Kiboko\Component\SocialNetwork\Model\Attachment:
+  type: entity
+  repositoryClass: Kiboko\Component\SocialNetwork\Repository\AttachmentRepository
+  table: attachment
+  fields:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+    createdAt:
+      type: datetime
+      column: created_at
+      gedmo:
+        timestampable:
+          on: create
+    updatedAt:
+      type: datetime
+      column: updated_at
+      gedmo:
+        timestampable:
+          on: update
+  oneToOne:
+    fileInfo:
+      targetEntity: Akeneo\Component\FileInfo\Model\FileInfo
+      joinColumn:
+        name: file_id
+        referencedColumnName: id
+  manyToOne:
+    parent:
+      targetEntity: Message
+      inversedBy: children
+      joinColumn:
+        name: parent_id
+        referencedColumnName: id
+        onDelete: cascade
+    sender:
+      targetEntity: User
+      inversedBy: msgSender
+      joinColumn:
+        name: sender_id
+        referencedColumnName: id
+        onDelete: set null
+  oneToMany:
+    target:
+      targetEntity: MessageRecipient
+      mappedBy: message
+    children:
+      targetEntity: Message
+      mappedBy: parent

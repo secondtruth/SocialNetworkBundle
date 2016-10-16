@@ -1,66 +1,61 @@
-Kiboko\Bundle\SocialNetworkBundle\Entity\Message:
+Kiboko\Component\SocialNetwork\Model\Message:
   type: entity
-  repositoryClass: Kiboko\Bundle\SocialNetworkBundle\Repository\MessageRepository
-  table: message
+  repositoryClass: Kiboko\Component\SocialNetwork\Repository\MessageRepository
+  table: kiboko_social_message
   fields:
     id:
       type: integer
       id: true
+      column: id
       generator:
         strategy: AUTO
     subject:
       type: string
       length: 255
       notBlank: true
+      column: subject
     content:
       type: text
+      column: content
     allowAnswer:
       type: boolean
       column: allow_answer
-    filename:
-      type: string
-      length: 255
-      nullable: true
-    typeOfMessage:
+    messageType:
       type: string
       length: 90
       nullable: true
-      column: type_of_message
-    created_at:
+      column: message_type
+    createdAt:
       type: datetime
+      column: created_at
       gedmo:
         timestampable:
           on: create
-    updated_at:
+    updatedAt:
       type: datetime
+      column: updated_at
       gedmo:
         timestampable:
           on: update
-  lifecycleCallbacks:
-    prePersist: [ preUpload ]
-    preUpdate: [ preUpload ]
-    postPersist: [ upload ]
-    postUpdate: [ upload ]
-    preRemove: [ removeUpload ]
   manyToOne:
     parent:
-      targetEntity: Message
+      targetEntity: Kiboko\Component\SocialNetwork\Model\Message
       inversedBy: children
       joinColumn:
         name: parent_id
         referencedColumnName: id
         onDelete: cascade
     sender:
-      targetEntity: User
-      inversedBy: msgSender
+      targetEntity: Kiboko\Component\SocialNetwork\Model\User
+      inversedBy: sender
       joinColumn:
         name: sender_id
         referencedColumnName: id
         onDelete: set null
   oneToMany:
-    target:
-      targetEntity: MessageTarget
-      mappedBy: message
+    recipient:
+      targetEntity: Kiboko\Component\SocialNetwork\Model\MessageRecipient
+      mappedBy: messages
     children:
-      targetEntity: Message
+      targetEntity: Kiboko\Component\SocialNetwork\Model\Message
       mappedBy: parent

@@ -21,10 +21,16 @@
         "stof/doctrine-extensions-bundle": "~1.2.0",
         "symfony/twig-bridge": "^3.1",
         "doctrine/doctrine-bundle": "^1.6",
-        "doctrine/orm": "^2.5"
+        "doctrine/orm": "^2.5",
+        "symfony/validator": "^3.1",
+        "symfony/form": "^3.1"
     },
     "autoload": {
-        "psr-4": { "Kiboko\\Bundle\\SocialNetworkBundle\\": "src/Bundle/SocialNetworkBundle/" }
+        "psr-4": {
+            "Kiboko\\Bundle\\SocialNetworkBundle\\": "src/Bundle/SocialNetworkBundle/",
+            "Kiboko\\Component\\SocialNetwork\\": "src/Component/SocialNetwork/",
+            "Akeneo\\Component\\FileStorage\\": "src/Component/FileStorage/"
+        }
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^1.12"
