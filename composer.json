@@ -1,8 +1,8 @@
 {
-    "name": "kiboko/social-network-bundle",
+    "name": "secondtruth/social-network-bundle",
     "type": "symfony-bundle",
-    "description": "Symfony SocialNetworkBundle, derived from fulgurio/social-network-bundle",
-    "keywords": ["Social network"],
+    "description": "A Social Network Bundle for Symfony",
+    "keywords": ["social network"],
     "license": "GPL",
     "authors": [
         {
@@ -15,15 +15,19 @@
         }
     ],
     "require": {
-        "php": "~7.0.0",
-        "symfony/framework-bundle": "~3.1.0",
+        "php": ">=7.4",
+        "symfony/framework-bundle": "^5.4",
         "friendsofsymfony/user-bundle": "dev-master",
-        "stof/doctrine-extensions-bundle": "~1.2.0",
-        "symfony/twig-bridge": "^3.1",
-        "doctrine/doctrine-bundle": "^1.6",
+        "stof/doctrine-extensions-bundle": "^1.7",
+        "symfony/twig-bridge": "^5.4",
+        "doctrine/doctrine-bundle": "^2.7",
         "doctrine/orm": "^2.5",
-        "symfony/validator": "^3.1",
-        "symfony/form": "^3.1"
+        "symfony/validator": "^5.4",
+        "symfony/form": "^5.4"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.0",
+        "symplify/easy-coding-standard": "^10.2"
     },
     "autoload": {
         "psr-4": {
@@ -31,8 +35,5 @@
             "Kiboko\\Component\\SocialNetwork\\": "src/Component/SocialNetwork/",
             "Akeneo\\Component\\FileStorage\\": "src/Component/FileStorage/"
         }
-    },
-    "require-dev": {
-        "friendsofphp/php-cs-fixer": "^1.12"
     }
 }
