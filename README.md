@@ -1,8 +1,8 @@
-Getting Started With FulgurioSocialNetworkBundle
-================================================
+# Getting Started with SocialNetworkBundle
 
-The SocialNetworkBundle adds support to make a social network on your symfony 2
-project.
+The SocialNetworkBundle adds support to make a social network on your Symfony 5 project.
+
+***HELP WANTED for porting this Bundle to Symfony 5.***
 
 ## Prerequisites
 
