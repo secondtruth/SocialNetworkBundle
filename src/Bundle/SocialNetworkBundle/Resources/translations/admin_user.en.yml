@@ -10,7 +10,7 @@ kiboko_social:
       username:             Username
       email:                Email
     view:
-      title:                %username% infos
+      title:                '%username% infos'
       last_login:           Last login
       register_date:        Registration date
       username:             Username

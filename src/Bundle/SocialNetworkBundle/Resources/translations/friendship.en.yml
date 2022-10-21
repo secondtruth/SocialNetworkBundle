@@ -14,7 +14,7 @@ kiboko_social:
       success_msg:           Invitation has been sent successfully !
       pending:               Invitation is pending
       email:
-        subject:             %current_username% invit you to join Social Network
+        subject:             '%current_username% invit you to join Social Network'
         text:                |
                              Hello %username%,
 
@@ -22,38 +22,38 @@ kiboko_social:
                              Click on the link %link% to accept or not his invitation.
         html:
           msg1:              Hello %username%,
-          msg2:              %current_username% invit you to join his friends list on Social Network.
+          msg2:              '%current_username% invit you to join his friends list on Social Network.'
           msg3:              Click %tag%here%endtag% to accept or not his invitation.
     accept:
       email:
-        subject:             %current_username% has accepted your invitation to join his friends list on Social Network
+        subject:             '%current_username% has accepted your invitation to join his friends list on Social Network'
         text:                |
                              Hello %username%,
 
                              %current_username% has accepted your invitation to join his friends list on Social Network.
         html:
           msg1:              Hello %username%,
-          msg2:              %current_username% has accepted your invitation to join his friends list on Social Network.
+          msg2:              '%current_username% has accepted your invitation to join his friends list on Social Network.'
     refuse:
       email:
-        subject:             %current_username% has refused your invitation to join his friends list on Social Network
+        subject:             '%current_username% has refused your invitation to join his friends list on Social Network'
         text:                |
                              Hello %username%,
 
                              %current_username% has refused your invitation to join his friends list on Social Network.
         html:
           msg1:              Hello %username%,
-          msg2:              %current_username% has refused your invitation to join his friends list on Social Network.
+          msg2:              '%current_username% has refused your invitation to join his friends list on Social Network.'
     remove:
       email:
-        subject:             %current_username% has removed you from his friends list on Social Network
+        subject:             '%current_username% has removed you from his friends list on Social Network'
         text:                |
                              Hello %username%,
 
                              %current_username% has refused your invitation to join his friends list on Social Network.
         html:
           msg1:              Hello %username%,
-          msg2:              %current_username% has removed you from his friends list on Social Network.
+          msg2:              '%current_username% has removed you from his friends list on Social Network.'
     add:
       title:                 Friend search
       search:                Friend search

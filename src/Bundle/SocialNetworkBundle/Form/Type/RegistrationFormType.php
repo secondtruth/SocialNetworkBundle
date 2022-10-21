@@ -11,7 +11,7 @@
 namespace Kiboko\Bundle\SocialNetworkBundle\Form\Type;
 
 use FOS\UserBundle\Form\Type\RegistrationFormType as BaseType;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * Registration form type.
@@ -25,7 +25,7 @@ class RegistrationFormType extends BaseType
      *
      * @see Symfony\Component\Form\FormTypeInterface::buildForm()
      */
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('username')

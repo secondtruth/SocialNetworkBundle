@@ -11,21 +11,23 @@
 namespace Kiboko\Bundle\SocialNetworkBundle\Twig\Extension;
 
 use Kiboko\Bundle\SocialNetworkBundle\Entity\User;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class MessengerExtension extends \Twig_Extension
+class MessengerExtension extends AbstractExtension
 {
     /**
-     * @var Symfony\Bridge\Doctrine\RegistryInterface
+     * @var ManagerRegistry
      */
     protected $doctrine;
 
     /**
      * Constructor.
      *
-     * @param RegistryInterface $doctrine
+     * @param ManagerRegistry $doctrine
      */
-    public function __construct(RegistryInterface $doctrine)
+    public function __construct(ManagerRegistry $doctrine)
     {
         $this->doctrine = $doctrine;
     }
@@ -38,7 +40,7 @@ class MessengerExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            'nbOfUnreadMessage' => new \Twig_Function_Method($this, 'nbOfUnreadMessage', ['is_safe' => ['html']]),
+            'nbOfUnreadMessage' => new TwigFunction('nbOfUnreadMessage', [$this, 'nbOfUnreadMessage'], ['is_safe' => ['html']]),
         ];
     }
 

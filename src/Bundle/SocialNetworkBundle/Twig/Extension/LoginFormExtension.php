@@ -10,37 +10,39 @@
 
 namespace Kiboko\Bundle\SocialNetworkBundle\Twig\Extension;
 
-use Symfony\Component\Form\Extension\Csrf\CsrfProvider\SessionCsrfProvider;
-use Symfony\Component\HttpFoundation\Session;
-use Symfony\Component\Security\Core\SecurityContext;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
 /**
  * LogoutUrlHelper provides generator functions for the logout URL to Twig.
  *
  * @author Vincent Guerard <v.guerard@fulgurio.net>
  */
-class LoginFormExtension extends \Twig_Extension
+class LoginFormExtension extends AbstractExtension
 {
     /**
-     * @var Symfony\Component\HttpFoundation\Session
+     * @var Session
      */
     private $session;
 
     /**
-     * @var Symfony\Component\Form\Extension\Csrf\CsrfProvider\SessionCsrfProvider
+     * @var CsrfTokenManagerInterface
      */
-    private $csrfProvider;
+    private $csrfTokenManager;
 
     /**
      * Constructor.
      *
-     * @param Symfony\Component\HttpFoundation\Session                               $session
-     * @param Symfony\Component\Form\Extension\Csrf\CsrfProvider\SessionCsrfProvider $csrfProvider
+     * @param Session                   $session
+     * @param CsrfTokenManagerInterface $csrfTokenManager
      */
-    public function __construct(Session $session, SessionCsrfProvider $csrfProvider)
+    public function __construct(Session $session, CsrfTokenManagerInterface $csrfTokenManager)
     {
         $this->session = $session;
-        $this->csrfProvider = $csrfProvider;
+        $this->csrfTokenManager = $csrfTokenManager;
     }
 
     /**
@@ -49,8 +51,8 @@ class LoginFormExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            'last_username' => new \Twig_Function_Method($this, 'getLastUsername'), //, array('is_safe' => array('html'))),
-            'csrf_token' => new \Twig_Function_Method($this, 'getCsrfLoginToken'), //, array('is_safe' => array('html'))),
+            'last_username' => new TwigFunction('last_username', [$this, 'getLastUsername']), //, array('is_safe' => array('html'))),
+            'csrf_token' => new TwigFunction('csrf_token', [$this, 'getCsrfLoginToken']), //, array('is_safe' => array('html'))),
         ];
     }
 
@@ -61,7 +63,7 @@ class LoginFormExtension extends \Twig_Extension
      */
     public function getLastUsername()
     {
-        return (null === $this->session) ? '' : $this->session->get(SecurityContext::LAST_USERNAME);
+        return null !== $this->session ? $this->session->get(Security::LAST_USERNAME) : '';
     }
 
     /**
@@ -71,7 +73,7 @@ class LoginFormExtension extends \Twig_Extension
      */
     public function getCsrfLoginToken()
     {
-        return $this->csrfProvider->generateCsrfToken('authenticate');
+        return $this->csrfTokenManager->getToken('authenticate');
     }
 
     /**

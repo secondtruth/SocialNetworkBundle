@@ -46,10 +46,10 @@ kiboko_social:
     email:
       message:
         subject:              New message from %username%
-        text:                 %username% wrotes
-        html:                 %username% wrotes
+        text:                 '%username% wrote'
+        html:                 '%username% wrote'
       answer:
         subject:              New answer of "%message_subject%" message
         text:                 |
-                              %username% has answered to "%message_subject%"
-        html:                 %username% has answered to "%message_subject%"
+                              %username% replied to "%message_subject%"
+        html:                 '%username% replied to "%message_subject%"'

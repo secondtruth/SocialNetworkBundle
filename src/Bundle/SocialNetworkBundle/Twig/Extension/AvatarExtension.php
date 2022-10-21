@@ -11,16 +11,19 @@
 namespace Kiboko\Bundle\SocialNetworkBundle\Twig\Extension;
 
 use Kiboko\Bundle\SocialNetworkBundle\Entity\User;
+use Twig\Environment;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
 /**
  * User avatar function for Twig.
  *
  * @author Vincent Guerard <v.guerard@fulgurio.net>
  */
-class AvatarExtension extends \Twig_Extension
+class AvatarExtension extends AbstractExtension
 {
     /**
-     * @var \Twig_Environment
+     * @var Environment
      */
     protected $environment;
 
@@ -29,7 +32,7 @@ class AvatarExtension extends \Twig_Extension
      *
      * @see Twig_Extension::initRuntime()
      */
-    public function initRuntime(\Twig_Environment $environment)
+    public function initRuntime(Environment $environment)
     {
         $this->environment = $environment;
     }
@@ -40,7 +43,7 @@ class AvatarExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            'avatar' => new \Twig_Function_Method($this, 'getAvatar', ['is_safe' => ['html']]),
+            'avatar' => new TwigFunction('avatar', [$this, 'getAvatar'], ['is_safe' => ['html']]),
         ];
     }
 

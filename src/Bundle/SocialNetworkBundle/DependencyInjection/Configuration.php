@@ -26,8 +26,8 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('kiboko_social_network');
+        $treeBuilder = new TreeBuilder('kiboko_social_network');
+        $rootNode = $treeBuilder->getRootNode();
         $this->addEmailSection($rootNode);
         $this->addRegistrationSection($rootNode);
         $this->addResettingSection($rootNode);

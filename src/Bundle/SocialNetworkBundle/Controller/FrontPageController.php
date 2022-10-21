@@ -10,22 +10,17 @@
 
 namespace Kiboko\Bundle\SocialNetworkBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * Controller usual pages.
  *
  * @author Vincent Guerard <v.guerard@fulgurio.net>
  */
-class FrontPageController extends Controller
+class FrontPageController extends AbstractController
 {
-    /**
-     * Homepage.
-     *
-     * @return Symfony\Component\HttpFoundation\Response
-     */
     public function homepageAction()
     {
-        return $this->render('KibokoSocialNetworkBundle:FrontPage:homepage.html.twig', []);
+        return $this->render('@KibokoSocialNetwork/FrontPage/homepage.html.twig', []);
     }
 }

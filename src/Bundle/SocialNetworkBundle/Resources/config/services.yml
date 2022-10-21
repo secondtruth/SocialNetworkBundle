@@ -8,22 +8,22 @@ services:
     kiboko_social_network.twig.friendship_extension:
         class: Kiboko\Bundle\SocialNetworkBundle\Twig\Extension\FriendshipExtension
         arguments:
-            doctrine: '@doctrine'
+            $doctrine: '@doctrine'
         tags:
             -  { name: 'twig.extension' }
 
     kiboko_social_network.twig.login_form_extension:
         class: Kiboko\Bundle\SocialNetworkBundle\Twig\Extension\LoginFormExtension
         arguments:
-            session:       '@session'
-            csrf_provider: '@security.csrf.token_manager'
+            $session:       '@session'
+            $csrfTokenManager: '@security.csrf.token_manager'
         tags:
             -  { name: 'twig.extension' }
 
     kiboko_social_network.twig.messenger_extension:
         class: Kiboko\Bundle\SocialNetworkBundle\Twig\Extension\MessengerExtension
         arguments:
-            doctrine: '@doctrine'
+            $doctrine: '@doctrine'
         tags:
             -  { name: 'twig.extension' }
 
@@ -47,7 +47,7 @@ services:
 
     kiboko_social_network.profile.form.handler:
         class: Kiboko\Bundle\SocialNetworkBundle\Form\Handler\ProfileFormHandler
-        scope: request
+        # scope: request
         arguments:
             - '@fos_user.profile.form'
             - '@request'
@@ -123,18 +123,18 @@ services:
             1: '@router'
             2: '@templating'
             3:
-                registration.from_mail     : %fos_user.registration.confirmation.from_email%
-                registration.subject       : %kiboko_social_network.registration.email.subject%
-                registration.template.text : %kiboko_social_network.registration.email.text%
-                registration.template.html : %kiboko_social_network.registration.email.html%
-                confirmation.from_mail     : %fos_user.registration.confirmation.from_email%
-                confirmation.subject       : %kiboko_social_network.confirmation.email.subject%
-                confirmation.template.text : %kiboko_social_network.confirmation.email.text%
-                confirmation.template.html : %kiboko_social_network.confirmation.email.html%
-                resetting.from_mail        : %fos_user.resetting.email.from_email%
-                resetting.subject          : %kiboko_social_network.resetting.email.subject%
-                resetting.template.text     : %kiboko_social_network.resetting.email.text%
-                resetting.template.html    : %kiboko_social_network.resetting.email.html%
+                registration.from_mail     : '%fos_user.registration.confirmation.from_email%'
+                registration.subject       : '%kiboko_social_network.registration.email.subject%'
+                registration.template.text : '%kiboko_social_network.registration.email.text%'
+                registration.template.html : '%kiboko_social_network.registration.email.html%'
+                confirmation.from_mail     : '%fos_user.registration.confirmation.from_email%'
+                confirmation.subject       : '%kiboko_social_network.confirmation.email.subject%'
+                confirmation.template.text : '%kiboko_social_network.confirmation.email.text%'
+                confirmation.template.html : '%kiboko_social_network.confirmation.email.html%'
+                resetting.from_mail        : '%fos_user.resetting.email.from_email%'
+                resetting.subject          : '%kiboko_social_network.resetting.email.subject%'
+                resetting.template.text    : '%kiboko_social_network.resetting.email.text%'
+                resetting.template.html    : '%kiboko_social_network.resetting.email.html%'
 
     # Messenger mailer
     kiboko_social_network.messenger_mailer:
@@ -144,16 +144,16 @@ services:
             1: '@router'
             2: '@templating'
             3:
-                message.from          : %kiboko_social_network.messenger.message.email.from%
-                message.from_name     : %kiboko_social_network.messenger.message.email.from_name%
-                message.subject       : %kiboko_social_network.messenger.message.email.subject%
-                message.template.text : %kiboko_social_network.messenger.message.email.text%
-                message.template.html : %kiboko_social_network.messenger.message.email.html%
-                answer.from           : %kiboko_social_network.messenger.answer.email.from%
-                answer.from_name      : %kiboko_social_network.messenger.answer.email.from_name%
-                answer.subject        : %kiboko_social_network.messenger.answer.email.subject%
-                answer.template.text  : %kiboko_social_network.messenger.answer.email.text%
-                answer.template.html  : %kiboko_social_network.messenger.answer.email.html%
+                message.from          : '%kiboko_social_network.messenger.message.email.from%'
+                message.from_name     : '%kiboko_social_network.messenger.message.email.from_name%'
+                message.subject       : '%kiboko_social_network.messenger.message.email.subject%'
+                message.template.text : '%kiboko_social_network.messenger.message.email.text%'
+                message.template.html : '%kiboko_social_network.messenger.message.email.html%'
+                answer.from           : '%kiboko_social_network.messenger.answer.email.from%'
+                answer.from_name      : '%kiboko_social_network.messenger.answer.email.from_name%'
+                answer.subject        : '%kiboko_social_network.messenger.answer.email.subject%'
+                answer.template.text  : '%kiboko_social_network.messenger.answer.email.text%'
+                answer.template.html  : '%kiboko_social_network.messenger.answer.email.html%'
         calls:
             - [ setMessenger, [ '@kiboko_social_network.messenger.messagebox' ] ]
 
@@ -161,5 +161,5 @@ services:
     kiboko_social_network.messenger.messagebox:
         class: Kiboko\Bundle\SocialNetworkBundle\Service\Messenger
         arguments:
-            doctrine: '@doctrine'
-            securityContext: '@security.context'
+            $doctrine: '@doctrine'
+            $securityContext: '@security.context'

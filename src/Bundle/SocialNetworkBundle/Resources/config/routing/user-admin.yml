@@ -1,39 +1,39 @@
 kiboko_social_network_admin_users:
-    pattern:  /
+    path:  /
     defaults: { _controller: KibokoSocialNetworkBundle:AdminUser:list }
 
 kiboko_social_network_admin_users_ban:
-    pattern:  /{userId}/ban
+    path:  /{userId}/ban
     defaults: { _controller: KibokoSocialNetworkBundle:AdminUser:ban }
 
 kiboko_social_network_admin_users_unban:
-    pattern:  /{userId}/unban
+    path:  /{userId}/unban
     defaults: { _controller: KibokoSocialNetworkBundle:AdminUser:ban }
 
 kiboko_social_network_admin_users_remove_avatar:
-    pattern:  /{userId}/remove_avatar
+    path:  /{userId}/remove_avatar
     defaults: { _controller: KibokoSocialNetworkBundle:AdminUser:removeAvatar }
 
 kiboko_social_network_admin_users_init_password:
-    pattern:  /{userId}/init-password
+    path:  /{userId}/init-password
     defaults: { _controller: KibokoSocialNetworkBundle:AdminUser:initPassword }
 
 kiboko_social_network_admin_users_contact:
-    pattern:  /{userId}/contact
+    path:  /{userId}/contact
     defaults: { _controller: KibokoSocialNetworkBundle:AdminUser:contact }
 
 kiboko_social_network_admin_users_add:
-    pattern:  /add
+    path:  /add
     defaults: { _controller: KibokoSocialNetworkBundle:AdminUser:add }
 
 kiboko_social_network_admin_users_edit:
-    pattern:  /{userId}/edit
+    path:  /{userId}/edit
     defaults: { _controller: KibokoSocialNetworkBundle:AdminUser:add }
 
 kiboko_social_network_admin_users_remove:
-    pattern:  /{userId}/remove
+    path:  /{userId}/remove
     defaults: { _controller: KibokoSocialNetworkBundle:AdminUser:remove }
 
 kiboko_social_network_admin_users_view:
-    pattern:  /{userId}/view
+    path:  /{userId}/view
     defaults: { _controller: KibokoSocialNetworkBundle:AdminUser:view }

@@ -13,7 +13,7 @@ namespace Kiboko\Bundle\SocialNetworkBundle\Controller;
 use Kiboko\Bundle\SocialNetworkBundle\Entity\User;
 use Kiboko\Bundle\SocialNetworkBundle\Entity\UserFriendship;
 use Kiboko\Bundle\SocialNetworkBundle\Repository\UserFriendshipRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -24,7 +24,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
  *
  * @author Vincent Guerard <v.guerard@fulgurio.net>
  */
-class FriendshipController extends Controller
+class FriendshipController extends AbstractController
 {
     /**
      * Friend user list page.
