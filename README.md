@@ -2,7 +2,7 @@
 
 The SocialNetworkBundle adds support to make a social network on your Symfony 5 project.
 
-***HELP WANTED for porting this Bundle to Symfony 5.***
+***HELP WANTED for porting this bundle to Symfony 7.***
 
 ## Prerequisites
 
@@ -27,19 +27,19 @@ Configuration of this bundle is also included on this document.
 
 Installation is a quick 3 step process:
 
-1. Download FulgurioSocialNetworkBundle
+1. Download KibokoSocialNetworkBundle
 2. Configure the Autoloader
 3. Enable the Bundle
 4. Configure your application's security.yml
 5. Configure the FOSUserBundle
 6. Configure the bundle
-7. Import FulgurioSocialNetworkBundle routing
+7. Import KibokoSocialNetworkBundle routing
 8. Update your database schema
 
-### Step 1: Download FulgurioSocialNetworkBundle
+### Step 1: Download KibokoSocialNetworkBundle
 
-Ultimately, the FulgurioSocialNetworkBundle files should be downloaded to the
-`vendor/bundles/Fulgurio/SocialNetworkBundle` directory.
+Ultimately, the KibokoSocialNetworkBundle files should be downloaded to the
+`vendor/bundles/Kiboko/SocialNetworkBundle` directory.
 
 This can be done in several ways, depending on your preference. The first
 method is the standard Symfony2 method.
@@ -72,9 +72,9 @@ Add the following lines in your `deps` file:
     target=bundles/Knp/Bundle/PaginatorBundle
     version=v2.2
 
-[FulgurioSocialNetworkBundle]
-    git=git://github.com/Fulgurio/SocialNetworkBundle.git
-    target=bundles/Fulgurio/SocialNetworkBundle
+[KibokoSocialNetworkBundle]
+    git=git://github.com/Kiboko/SocialNetworkBundle.git
+    target=bundles/Kiboko/SocialNetworkBundle
 ```
 
 Now, run the vendors script to download the bundle:
@@ -93,7 +93,7 @@ $ git submodule add git://github.com/stof/StofDoctrineExtensionsBundle.git vendo
 $ git submodule add git://github.com/Atlantic18/DoctrineExtensions.git vendor
 $ git submodule add git://github.com/KnpLabs/knp-components.git vendor
 $ git submodule add git://github.com/KnpLabs/KnpPaginatorBundle.git vendor/bundles/Knp/Bundle/PaginatorBundle
-$ git submodule add git://github.com/Fulgurio/SocialNetworkBundle.git vendor/bundles/Fulgurio/SocialNetworkBundle
+$ git submodule add git://github.com/Kiboko/SocialNetworkBundle.git vendor/bundles/Kiboko/SocialNetworkBundle
 $ git submodule update --init
 ```
 
@@ -112,7 +112,7 @@ $loader->registerNamespaces(array(
     'Gedmo'            => __DIR__.'/../vendor/gedmo-doctrine-extensions/lib',
     'Knp\\Component'   => __DIR__.'/../vendor/knp-components/src',
     'Knp\\Bundle'      => __DIR__.'/../vendor/bundles',
-    'Fulgurio' => __DIR__.'/../vendor/bundles',
+    'Kiboko' => __DIR__.'/../vendor/bundles',
 ));
 ```
 
@@ -131,7 +131,7 @@ public function registerBundles()
         new FOS\UserBundle\FOSUserBundle(),
         new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
         new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
-        new Fulgurio\SocialNetworkBundle\FulgurioSocialNetworkBundle(),
+        new Kiboko\SocialNetworkBundle\KibokoSocialNetworkBundle(),
     );
 }
 ```
@@ -208,16 +208,16 @@ of datastore you are using.
 fos_user:
     db_driver:     orm
     firewall_name: main
-    user_class:    Fulgurio\SocialNetworkBundle\Entity\User
+    user_class:    Kiboko\SocialNetworkBundle\Entity\User
     registration:
         form:
-            type:  fulgurio_social_network_registration_type
+            type:  kiboko_social_network_registration_type
     resetting:
         form:
-            type:  fulgurio_social_network_resetting_type
+            type:  kiboko_social_network_resetting_type
     profile:
         form:
-            type:  fulgurio_social_network_profile_type
+            type:  kiboko_social_network_profile_type
 
 stof_doctrine_extensions:
     orm:
@@ -232,7 +232,7 @@ bundle sent email)
 
 ``` yaml
 # app/config/config.yml
-fulgurio_social_network:
+kiboko_social_network:
     contact:
         admin:
             email:
@@ -245,10 +245,10 @@ fulgurio_social_network:
                     address: contact@example.com
 ```
 
-### Step 7: Import FulgurioSocialNetworkBundle routing
+### Step 7: Import KibokoSocialNetworkBundle routing
 
 Now that you have activated and configured the bundle, all that is left to do is
-import the FulgurioSocialNetworkBundle routing files.
+import the KibokoSocialNetworkBundle routing files.
 
 By importing the routing files you will have ready made pages for things such as
 logging in, creating users, etc.
@@ -258,14 +258,14 @@ In YAML:
 ``` yaml
 # app/config/routing.yml
 fos_user_security:
-    resource: "@FulgurioSocialNetworkBundle/Resources/config/routing.yml"
+    resource: "@KibokoSocialNetworkBundle/Resources/config/routing.yml"
 ```
 
 Or if you prefer XML:
 
 ``` xml
 <!-- app/config/routing.xml -->
-<import resource="@FulgurioSocialNetworkBundle/Resources/config/routing.yml"/>
+<import resource="@KibokoSocialNetworkBundle/Resources/config/routing.yml"/>
 ```
 
 ### Step 8: Update your database schema
@@ -281,5 +281,5 @@ $ php app/console doctrine:schema:update --force
 ```
 
 Now that you have completed the basic installation and configuration of the
-FulgurioSocialNetworkBundle, you are ready to learn about more advanced
+KibokoSocialNetworkBundle, you are ready to learn about more advanced
 features and usages of the bundle.
