@@ -11,21 +11,23 @@
 namespace Kiboko\Bundle\SocialNetworkBundle\Twig\Extension;
 
 use Kiboko\Bundle\SocialNetworkBundle\Entity\User;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class FriendshipExtension extends \Twig_Extension
+class FriendshipExtension extends AbstractExtension
 {
     /**
-     * @var RegistryInterface
+     * @var ManagerRegistry
      */
     protected $doctrine;
 
     /**
      * Constructor.
      *
-     * @param RegistryInterface $doctrine
+     * @param ManagerRegistry $doctrine
      */
-    public function __construct(RegistryInterface $doctrine)
+    public function __construct(ManagerRegistry $doctrine)
     {
         $this->doctrine = $doctrine;
     }
@@ -38,7 +40,7 @@ class FriendshipExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            'nbOfPendingUser' => new \Twig_Function_Method($this, 'nbOfPendingUser', ['is_safe' => ['html']]),
+            'nbOfPendingUser' => new TwigFunction('nbOfPendingUser', [$this, 'nbOfPendingUser'], ['is_safe' => ['html']]),
         ];
     }
 

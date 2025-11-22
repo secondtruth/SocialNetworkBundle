@@ -14,5 +14,5 @@ fos_user_resetting:
     prefix: /resetting
 
 kiboko_social_network_unsubscribe:
-    pattern:  /unsubscribe
+    path:  /unsubscribe
     defaults: { _controller: KibokoSocialNetworkBundle:Profile:unsubscribe }

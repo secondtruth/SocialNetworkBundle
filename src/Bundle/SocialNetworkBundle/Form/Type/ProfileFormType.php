@@ -11,7 +11,7 @@
 namespace Kiboko\Bundle\SocialNetworkBundle\Form\Type;
 
 use FOS\UserBundle\Form\Type\ProfileFormType as BaseType;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * Profile form type.
@@ -25,7 +25,7 @@ class ProfileFormType extends BaseType
      *
      * @see Symfony\Component\Form\FormTypeInterface::getName()
      */
-    protected function buildUserForm(FormBuilder $builder, array $options)
+    protected function buildUserForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildUserForm($builder, $options);
         $builder->add('plainPassword', 'repeated', [

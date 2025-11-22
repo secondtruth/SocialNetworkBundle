@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8" />
-	<link rel="stylesheet" href="{{ asset('bundles/kiboko_socialsocialnetwork/css/bootstrap.min.css') }}" />
-	<link rel="stylesheet" href="{{ asset('bundles/kiboko_socialsocialnetwork/css/styles.css') }}" />
-	<script src="{{ asset('bundles/kiboko_socialsocialnetwork/js/jquery-1.7.2.min.js') }}"></script>
-	<script src="{{ asset('bundles/kiboko_socialsocialnetwork/js/bootstrap.min.js') }}"></script>
+	<link rel="stylesheet" href="{{ asset('bundles/kibokosocialnetwork/css/bootstrap.min.css') }}" />
+	<link rel="stylesheet" href="{{ asset('bundles/kibokosocialnetwork/css/styles.css') }}" />
+	<script src="{{ asset('bundles/kibokosocialnetwork/js/jquery-1.7.2.min.js') }}"></script>
+	<script src="{{ asset('bundles/kibokosocialnetwork/js/bootstrap.min.js') }}"></script>
 	<title>{% block title %}{% trans %}kiboko_social.socialnetwork.title{% endtrans %}{% endblock %}</title>
 {% block javascriptTop %}{% endblock %}
 </head>
@@ -57,11 +57,11 @@
 			</div>
 		</div>
 	</header>
-{% if app.session.hasFlash('notice') or app.session.hasFlash('fos_user_success') %}
-	<div class="alert alert-info">{{ app.session.flash('notice')|trans }}{{ app.session.flash('fos_user_success')|trans }}</div>
+{% if app.session.flashbag.has('notice') or app.session.flashbag.has('fos_user_success') %}
+	<div class="alert alert-info">{{ app.session.flashbag.get('notice')|trans }}{{ app.session.flash('fos_user_success')|trans }}</div>
 {% endif %}
-{% if app.session.hasFlash('success') %}
-	<div class="alert alert-success">{{ app.session.flash('success')|trans }}</div>
+{% if app.session.flashbag.has('success') %}
+	<div class="alert alert-success">{{ app.session.flashbag.get('success')|trans }}</div>
 {% endif %}
 {% block content %}{% endblock %}
 	<hr />
