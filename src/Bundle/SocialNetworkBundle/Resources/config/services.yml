@@ -59,7 +59,7 @@ services:
         arguments:
             - '@mailer'
             - '@router'
-            - '@templating'
+            - '@twig'
             -
                 admin.from:          '%kiboko_social_network.contact.admin.email.from%'
                 admin.from_name:     '%kiboko_social_network.contact.admin.email.from_name%'
@@ -75,7 +75,7 @@ services:
         arguments:
             - '@mailer'
             - '@router'
-            - '@templating'
+            - '@twig'
             -
                 admin.from:          '%kiboko_social_network.avatar.admin.remove.email.from%'
                 admin.from_name:     '%kiboko_social_network.avatar.admin.remove.email.from_name%'
@@ -92,7 +92,7 @@ services:
         arguments:
             - '@mailer'
             - '@router'
-            - '@templating'
+            - '@twig'
             -
                 from:                 '%kiboko_social_network.friendship.email.from%'
                 from_name:            '%kiboko_social_network.friendship.email.from_name%'
@@ -162,4 +162,4 @@ services:
         class: Kiboko\Bundle\SocialNetworkBundle\Service\Messenger
         arguments:
             $doctrine: '@doctrine'
-            $securityContext: '@security.context'
+            $security: '@security.helper'

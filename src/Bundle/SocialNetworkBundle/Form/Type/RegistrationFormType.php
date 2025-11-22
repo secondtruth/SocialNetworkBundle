@@ -11,6 +11,8 @@
 namespace Kiboko\Bundle\SocialNetworkBundle\Form\Type;
 
 use FOS\UserBundle\Form\Type\RegistrationFormType as BaseType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
@@ -29,17 +31,7 @@ class RegistrationFormType extends BaseType
     {
         $builder
             ->add('username')
-            ->add('email', 'email')
-            ->add('plainPassword', 'password');
-    }
-
-    /**
-     * (non-PHPdoc).
-     *
-     * @see Symfony\Component\Form\FormTypeInterface::getName()
-     */
-    public function getName()
-    {
-        return 'registration';
+            ->add('email', EmailType::class)
+            ->add('plainPassword', PasswordType::class);
     }
 }

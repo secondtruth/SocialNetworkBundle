@@ -11,6 +11,7 @@
 namespace Kiboko\Bundle\SocialNetworkBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilder;
 
 /**
@@ -28,21 +29,11 @@ class AdminContactFormType extends AbstractType
     public function buildForm(FormBuilder $builder, array $options)
     {
         $builder
-            ->add('subject', 'text', [
+            ->add('subject', TextType::class, [
                 'required' => true,
         ])
-            ->add('message', 'text', [
+            ->add('message', TextType::class, [
                 'required' => true,
         ]);
-    }
-
-    /**
-     * (non-PHPdoc).
-     *
-     * @see Symfony\Component\Form\FormTypeInterface::getName()
-     */
-    public function getName()
-    {
-        return 'contact';
     }
 }

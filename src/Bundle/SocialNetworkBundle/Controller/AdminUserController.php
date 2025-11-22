@@ -16,7 +16,7 @@ use Kiboko\Bundle\SocialNetworkBundle\Form\Handler\AdminContactFormHandler;
 use Kiboko\Bundle\SocialNetworkBundle\Form\Type\AdminAccountFormType;
 use Kiboko\Bundle\SocialNetworkBundle\Form\Type\AdminContactFormType;
 use Kiboko\Bundle\SocialNetworkBundle\Repository\UserRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,7 +28,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  *
  * @author Vincent Guerard <v.guerard@fulgurio.net>
  */
-class AdminUserController extends Controller
+class AdminUserController extends AbstractController
 {
     /**
      * Users listing action.

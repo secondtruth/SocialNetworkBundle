@@ -15,6 +15,9 @@ use Kiboko\Bundle\SocialNetworkBundle\Entity\User;
 use Symfony\Bundle\DoctrineBundle\Registry;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackValidator;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormInterface;
@@ -51,17 +54,17 @@ class NewMessageFormType extends AbstractType
     public function buildForm(FormBuilder $builder, array $options)
     {
         $builder
-            ->add('username_target', 'text', [
+            ->add('username_target', TextType::class, [
                 'required' => false,
                 'property_path' => false,
             ])
-            ->add('id_targets', 'choice', [
+            ->add('id_targets', ChoiceType::class, [
                 'multiple' => true,
                 'property_path' => false,
             ])
-            ->add('subject', 'text')
-            ->add('content', 'text')
-            ->add('file', 'file', ['required' => false])
+            ->add('subject', TextType::class)
+            ->add('content', TextType::class)
+            ->add('file', FileType::class, ['required' => false])
             ->addValidator(new CallbackValidator([$this, 'checkTarget']))
             ;
     }
@@ -95,7 +98,7 @@ class NewMessageFormType extends AbstractType
                 $target = new MessageTarget();
                 $target->setMessage($message);
                 $target->setTarget($friend);
-                $this->doctrine->getEntityManager()->persist($target);
+                $this->doctrine->getManager()->persist($target);
             }
             $message->addMessageTarget($target);
 
@@ -131,15 +134,5 @@ class NewMessageFormType extends AbstractType
         }
 
         return $foundedFriends;
-    }
-
-    /**
-     * (non-PHPdoc).
-     *
-     * @see Symfony\Component\Form\FormTypeInterface::getName()
-     */
-    public function getName()
-    {
-        return 'message';
     }
 }

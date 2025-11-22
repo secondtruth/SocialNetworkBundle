@@ -51,8 +51,8 @@ class LoginFormExtension extends AbstractExtension
     public function getFunctions()
     {
         return [
-            'last_username' => new TwigFunction('last_username', [$this, 'getLastUsername']), //, array('is_safe' => array('html'))),
-            'csrf_token' => new TwigFunction('csrf_token', [$this, 'getCsrfLoginToken']), //, array('is_safe' => array('html'))),
+            new TwigFunction('last_username', [$this, 'getLastUsername']),
+            new TwigFunction('csrf_token', [$this, 'getCsrfLoginToken']),
         ];
     }
 
@@ -74,13 +74,5 @@ class LoginFormExtension extends AbstractExtension
     public function getCsrfLoginToken()
     {
         return $this->csrfTokenManager->getToken('authenticate');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'login_form';
     }
 }

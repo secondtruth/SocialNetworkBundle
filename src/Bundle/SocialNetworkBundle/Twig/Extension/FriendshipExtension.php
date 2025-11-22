@@ -40,7 +40,7 @@ class FriendshipExtension extends AbstractExtension
     public function getFunctions()
     {
         return [
-            'nbOfPendingUser' => new TwigFunction('nbOfPendingUser', [$this, 'nbOfPendingUser'], ['is_safe' => ['html']]),
+            new TwigFunction('nbOfPendingUser', [$this, 'nbOfPendingUser'], ['is_safe' => ['html']]),
         ];
     }
 
@@ -56,15 +56,5 @@ class FriendshipExtension extends AbstractExtension
         return $this->doctrine
             ->getRepository('KibokoSocialNetworkBundle:UserFriendship')
             ->countPendingUserOfFrienship($user);
-    }
-
-    /**
-     * (non-PHPdoc).
-     *
-     * @see Twig_ExtensionInterface::getName()
-     */
-    public function getName()
-    {
-        return 'friendship';
     }
 }

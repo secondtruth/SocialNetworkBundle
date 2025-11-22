@@ -13,6 +13,11 @@ namespace Kiboko\Bundle\SocialNetworkBundle\Form\Type;
 use Kiboko\Bundle\SocialNetworkBundle\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackValidator;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormInterface;
@@ -40,19 +45,19 @@ class AdminAccountFormType extends AbstractType
     {
         $container = $this->container;
         $builder
-            ->add('username', 'text', [
+            ->add('username', TextType::class, [
                 'required' => true,
             ])
-            ->add('email', 'email', [
+            ->add('email', EmailType::class, [
                 'required' => true,
             ])
-            ->add('newPassword', 'repeated', [
-                'type' => 'password',
+            ->add('newPassword', RepeatedType::class, [
+                'type' => PasswordType::class,
                 'invalid_message' => 'kiboko_social.socialnetwork.add.password.no_match',
                 'required' => false,
                 'property_path' => false,
             ])
-            ->add('avatarFile', 'file', ['required' => false])
+            ->add('avatarFile', FileType::class, ['required' => false])
             ->addValidator(new CallbackValidator(function (FormInterface $form) use ($container) {
                 $request = $container->get('request');
                 $isUpdate = $request->get('userId') ? true : false;
@@ -70,15 +75,5 @@ class AdminAccountFormType extends AbstractType
                 }
             })
         );
-    }
-
-    /**
-     * (non-PHPdoc).
-     *
-     * @see Symfony\Component\Form\FormTypeInterface::getName()
-     */
-    public function getName()
-    {
-        return 'user';
     }
 }

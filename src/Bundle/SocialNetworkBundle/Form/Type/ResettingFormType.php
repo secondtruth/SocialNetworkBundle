@@ -11,6 +11,8 @@
 namespace Kiboko\Bundle\SocialNetworkBundle\Form\Type;
 
 use FOS\UserBundle\Form\Type\ResettingFormType as BaseType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
@@ -27,8 +29,8 @@ class ResettingFormType extends BaseType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('new', 'repeated', [
-            'type' => 'password',
+        $builder->add('new', RepeatedType::class, [
+            'type' => PasswordType::class,
             'invalid_message' => 'kiboko_social.socialnetwork.lost_password.password_no_match',
         ]);
     }

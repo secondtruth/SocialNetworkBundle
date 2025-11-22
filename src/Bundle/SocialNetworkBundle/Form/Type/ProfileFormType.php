@@ -11,6 +11,10 @@
 namespace Kiboko\Bundle\SocialNetworkBundle\Form\Type;
 
 use FOS\UserBundle\Form\Type\ProfileFormType as BaseType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
@@ -28,11 +32,11 @@ class ProfileFormType extends BaseType
     protected function buildUserForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildUserForm($builder, $options);
-        $builder->add('plainPassword', 'repeated', [
-            'type' => 'password',
+        $builder->add('plainPassword', RepeatedType::class, [
+            'type' => PasswordType::class,
             'invalid_message' => 'kiboko_social.socialnetwork.profile.edit_profil.password_no_match',
         ])
-        ->add('avatarFile', 'file', ['required' => false])
-        ->add('send_msg_to_email', 'checkbox', ['required' => false]);
+        ->add('avatarFile', FileType::class, ['required' => false])
+        ->add('send_msg_to_email', CheckboxType::class, ['required' => false]);
     }
 }

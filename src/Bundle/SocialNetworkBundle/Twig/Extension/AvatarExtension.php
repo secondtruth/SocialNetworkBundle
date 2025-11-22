@@ -23,27 +23,12 @@ use Twig\TwigFunction;
 class AvatarExtension extends AbstractExtension
 {
     /**
-     * @var Environment
-     */
-    protected $environment;
-
-    /**
-     * (non-PHPdoc).
-     *
-     * @see Twig_Extension::initRuntime()
-     */
-    public function initRuntime(Environment $environment)
-    {
-        $this->environment = $environment;
-    }
-
-    /**
      * Init Twig functions.
      */
     public function getFunctions()
     {
         return [
-            'avatar' => new TwigFunction('avatar', [$this, 'getAvatar'], ['is_safe' => ['html']]),
+            new TwigFunction('avatar', [$this, 'getAvatar'], ['is_safe' => ['html']]),
         ];
     }
 
@@ -61,14 +46,6 @@ class AvatarExtension extends AbstractExtension
             return $user->displayAvatar();
         }
 
-        return $this->environment->getExtension('assets')->getAssetUrl('bundles/kiboko_socialsocialnetwork/images/avatar.png');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'avatar';
+        return 'bundles/kiboko_socialsocialnetwork/images/avatar.png';
     }
 }

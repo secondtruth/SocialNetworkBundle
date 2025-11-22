@@ -15,12 +15,12 @@ use Kiboko\Bundle\SocialNetworkBundle\Form\Handler\Messenger\AnswerMessageFormHa
 use Kiboko\Bundle\SocialNetworkBundle\Form\Handler\Messenger\NewMessageFormHandler;
 use Kiboko\Bundle\SocialNetworkBundle\Form\Type\Messenger\AnswerMessageFormType;
 use Kiboko\Bundle\SocialNetworkBundle\Form\Type\Messenger\NewMessageFormType;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class MessengerController extends Controller
+class MessengerController extends AbstractController
 {
     /**
      * Messenger list page.

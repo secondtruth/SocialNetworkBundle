@@ -11,6 +11,8 @@
 namespace Kiboko\Bundle\SocialNetworkBundle\Form\Type\Messenger;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilder;
 
 class AnswerMessageFormType extends AbstractType
@@ -23,18 +25,8 @@ class AnswerMessageFormType extends AbstractType
     public function buildForm(FormBuilder $builder, array $options)
     {
         $builder
-            ->add('content', 'text')
-            ->add('file', 'file', ['required' => false])
+            ->add('content', TextType::class)
+            ->add('file', FileType::class, ['required' => false])
         ;
-    }
-
-    /**
-     * (non-PHPdoc).
-     *
-     * @see Symfony\Component\Form\FormTypeInterface::getName()
-     */
-    public function getName()
-    {
-        return 'answer';
     }
 }

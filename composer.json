@@ -15,16 +15,18 @@
         }
     ],
     "require": {
-        "php": ">=7.4",
-        "symfony/framework-bundle": "^5.4",
+        "php": ">=8.2",
+        "symfony/framework-bundle": "^6.4|^7.0",
+        "symfony/mailer": "^6.4|^7.0",
         "friendsofsymfony/user-bundle": "dev-master",
-        "stof/doctrine-extensions-bundle": "^1.7",
-        "symfony/twig-bridge": "^5.4",
-        "doctrine/doctrine-bundle": "^2.7",
+        "stof/doctrine-extensions-bundle": "^1.10",
+        "symfony/twig-bridge": "^6.4|^7.0",
+        "doctrine/doctrine-bundle": "^2.11",
         "doctrine/persistence": "^3.0",
-        "doctrine/orm": "^2.5",
-        "symfony/validator": "^5.4",
-        "symfony/form": "^5.4"
+        "doctrine/orm": "^2.17|^3.0",
+        "symfony/validator": "^6.4|^7.0",
+        "symfony/form": "^6.4|^7.0",
+        "symfony/mime": "^6.4|^7.0"
     },
     "require-dev": {
         "symplify/easy-coding-standard": "^10.2"

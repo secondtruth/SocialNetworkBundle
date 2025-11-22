@@ -12,35 +12,35 @@ namespace Kiboko\Bundle\SocialNetworkBundle\Service;
 
 use Kiboko\Bundle\SocialNetworkBundle\Entity\Message;
 use Kiboko\Bundle\SocialNetworkBundle\Entity\MessageTarget;
-use Symfony\Bridge\Doctrine\RegistryInterface;
-use Symfony\Component\Security\Core\SecurityContext;
+use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bundle\SecurityBundle\Security;
 
 class Messenger
 {
     /**
      * Doctrine object.
      *
-     * @var Doctrine
+     * @var ManagerRegistry
      */
     protected $doctrine;
 
     /**
-     * Security contect.
+     * Security service.
      *
-     * @var SecurityContext
+     * @var Security
      */
-    private $securityContext;
+    private $security;
 
     /**
      * Constructor.
      *
-     * @param RegistryInterface $doctrine
-     * @param SecurityContext   $securityContext
+     * @param ManagerRegistry $doctrine
+     * @param Security        $security
      */
-    public function __construct(RegistryInterface $doctrine, SecurityContext $securityContext)
+    public function __construct(ManagerRegistry $doctrine, Security $security)
     {
         $this->doctrine = $doctrine;
-        $this->securityContext = $securityContext;
+        $this->security = $security;
     }
 
     /**
@@ -55,7 +55,7 @@ class Messenger
     public function sendMessage($userTgt, $subject, $content, $canNotAnswer = false, $typeOfMessage = null)
     {
         $message = new Message();
-        $message->setSender($this->securityContext->getToken()->getUser());
+        $message->setSender($this->security->getUser());
         $message->setSubject($subject);
         $message->setContent($content);
         $message->setAllowAnswer(!$canNotAnswer);
@@ -67,7 +67,7 @@ class Messenger
         $messageTarget->setMessage($message);
         $messageTarget->setHasRead(false);
         $message->addMessageTarget($messageTarget);
-        $em = $this->doctrine->getEntityManager();
+        $em = $this->doctrine->getManager();
         $em->persist($messageTarget);
         $em->persist($message);
         $em->flush();

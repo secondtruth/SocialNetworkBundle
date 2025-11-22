@@ -11,8 +11,9 @@
 namespace Kiboko\Bundle\SocialNetworkBundle\Mailer;
 
 use Kiboko\Bundle\SocialNetworkBundle\Service\Messenger;
-use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\RouterInterface;
+use Twig\Environment;
 
 /**
  * Admin contact form type.
@@ -22,7 +23,7 @@ use Symfony\Component\Routing\RouterInterface;
 abstract class AbstractMailer
 {
     /**
-     * @var Swift_Mailer
+     * @var MailerInterface
      */
     protected $mailer;
 
@@ -32,7 +33,7 @@ abstract class AbstractMailer
     protected $router;
 
     /**
-     * @var EngineInterface
+     * @var Environment
      */
     protected $templating;
 
@@ -49,12 +50,12 @@ abstract class AbstractMailer
     /**
      * Constructor.
      *
-     * @param \Swift_Mailer   $mailer
+     * @param MailerInterface $mailer
      * @param RouterInterface $router
-     * @param EngineInterface $templating
+     * @param Environment     $templating
      * @param array           $parameters
      */
-    public function __construct(\Swift_Mailer $mailer, RouterInterface $router, EngineInterface $templating, array $parameters)
+    public function __construct(MailerInterface $mailer, RouterInterface $router, Environment $templating, array $parameters)
     {
         $this->mailer = $mailer;
         $this->router = $router;
@@ -78,13 +79,13 @@ abstract class AbstractMailer
             $fromName = current($from);
             $from = key($from);
         }
-        $message = \Swift_Message::newInstance()
-            ->setSubject($subject)
-            ->setFrom($from, $fromName)
-            ->setTo($to)
-            ->setBody($bodyHTML, 'text/html')
-            ->addPart($bodyText, 'text/plain');
-        $this->mailer->send($message);
+        $email = (new \Symfony\Component\Mime\Email())
+            ->from($fromName ? new \Symfony\Component\Mime\Address($from, $fromName) : $from)
+            ->to($to)
+            ->subject($subject)
+            ->html($bodyHTML)
+            ->text($bodyText);
+        $this->mailer->send($email);
     }
 
     /**

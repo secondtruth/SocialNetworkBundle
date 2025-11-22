@@ -40,7 +40,7 @@ class MessengerExtension extends AbstractExtension
     public function getFunctions()
     {
         return [
-            'nbOfUnreadMessage' => new TwigFunction('nbOfUnreadMessage', [$this, 'nbOfUnreadMessage'], ['is_safe' => ['html']]),
+            new TwigFunction('nbOfUnreadMessage', [$this, 'nbOfUnreadMessage'], ['is_safe' => ['html']]),
         ];
     }
 
@@ -56,15 +56,5 @@ class MessengerExtension extends AbstractExtension
         return $this->doctrine
                 ->getRepository('KibokoSocialNetworkBundle:Message')
                 ->countUnreadMessage($user);
-    }
-
-    /**
-     * (non-PHPdoc).
-     *
-     * @see Twig_ExtensionInterface::getName()
-     */
-    public function getName()
-    {
-        return 'messenger';
     }
 }

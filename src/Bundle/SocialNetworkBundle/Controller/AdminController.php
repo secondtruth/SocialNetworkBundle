@@ -10,7 +10,7 @@
 
 namespace Kiboko\Bundle\SocialNetworkBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @author Vincent Guerard <v.guerard@fulgurio.net>
  */
-class AdminController extends Controller
+class AdminController extends AbstractController
 {
     /**
      * Index page action.
