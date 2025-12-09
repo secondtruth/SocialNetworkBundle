@@ -1,8 +1,24 @@
 # Getting Started with SocialNetworkBundle
 
-The SocialNetworkBundle adds support to make a social network on your Symfony 5 project.
+The SocialNetworkBundle adds support to make a social network on your Symfony project.
 
-***HELP WANTED for porting this bundle to Symfony 7.***
+## Symfony Version Compatibility
+
+**✅ Symfony 6.4 and 7.x compatible!**
+
+This bundle has been modernized to support Symfony 6.4 and Symfony 7.x with PHP 8.2+.
+
+### Recent Modernization Updates
+
+- ✅ Migrated from SwiftMailer to Symfony Mailer
+- ✅ Updated all controllers to use AbstractController
+- ✅ Converted form types to use FQCN
+- ✅ Replaced deprecated security.context with Security service
+- ✅ Updated routing to modern FQCN syntax
+- ✅ Modernized Twig extensions
+- ✅ Updated all deprecated Symfony patterns
+
+**Note**: This bundle still depends on FOSUserBundle. See [FOSUSERBUNDLE_MIGRATION_GUIDE.md](FOSUSERBUNDLE_MIGRATION_GUIDE.md) for a comprehensive guide on migrating away from FOSUserBundle (recommended for long-term maintenance).
 
 ## Prerequisites
 
