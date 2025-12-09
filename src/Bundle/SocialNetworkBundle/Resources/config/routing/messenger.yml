@@ -1,25 +1,25 @@
 kiboko_social_network_messenger_new_message:
     path:  /new
-    defaults: { _controller: KibokoSocialNetworkBundle:Messenger:new }
+    defaults: { _controller: 'Kiboko\Bundle\SocialNetworkBundle\Controller\MessengerController::newAction' }
 
 kiboko_social_network_messenger_remove_message:
     path:  /{msgId}/remove
-    defaults: { _controller: KibokoSocialNetworkBundle:Messenger:remove }
+    defaults: { _controller: 'Kiboko\Bundle\SocialNetworkBundle\Controller\MessengerController::removeAction' }
     requirements:
         msgId:  \d+
 
 kiboko_social_network_messenger_reply_message:
     path:  /{msgId}/reply
-    defaults: { _controller: KibokoSocialNetworkBundle:Messenger:show }
+    defaults: { _controller: 'Kiboko\Bundle\SocialNetworkBundle\Controller\MessengerController::showAction' }
     requirements:
         msgId:  \d+
 
 kiboko_social_network_messenger_show_message:
     path:  /{msgId}/
-    defaults: { _controller: KibokoSocialNetworkBundle:Messenger:show }
+    defaults: { _controller: 'Kiboko\Bundle\SocialNetworkBundle\Controller\MessengerController::showAction' }
     requirements:
         msgId:  \d+
 
 kiboko_social_network_messenger_list:
     path:  /
-    defaults: { _controller: KibokoSocialNetworkBundle:Messenger:list }
+    defaults: { _controller: 'Kiboko\Bundle\SocialNetworkBundle\Controller\MessengerController::listAction' }

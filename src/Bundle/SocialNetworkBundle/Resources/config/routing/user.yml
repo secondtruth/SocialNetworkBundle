@@ -15,4 +15,4 @@ fos_user_resetting:
 
 kiboko_social_network_unsubscribe:
     path:  /unsubscribe
-    defaults: { _controller: KibokoSocialNetworkBundle:Profile:unsubscribe }
+    defaults: { _controller: 'Kiboko\Bundle\SocialNetworkBundle\Controller\ProfileController::unsubscribeAction' }

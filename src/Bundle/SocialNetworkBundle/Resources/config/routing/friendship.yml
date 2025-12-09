@@ -1,31 +1,31 @@
 kiboko_social_network_friendship_add:
     path:  /add
-    defaults: { _controller: KibokoSocialNetworkBundle:Friendship:add }
+    defaults: { _controller: 'Kiboko\Bundle\SocialNetworkBundle\Controller\FriendshipController::addAction' }
 
 kiboko_social_network_friendship_invit:
     path:  /{userId}/invit
-    defaults: { _controller: KibokoSocialNetworkBundle:Friendship:invit }
+    defaults: { _controller: 'Kiboko\Bundle\SocialNetworkBundle\Controller\FriendshipController::invitAction' }
 
 kiboko_social_network_friendship_accept:
     path:  /{userId}/accept
-    defaults: { _controller: KibokoSocialNetworkBundle:Friendship:accept }
+    defaults: { _controller: 'Kiboko\Bundle\SocialNetworkBundle\Controller\FriendshipController::acceptAction' }
 
 kiboko_social_network_friendship_refuse:
     path:  /{userId}/refuse
-    defaults: { _controller: KibokoSocialNetworkBundle:Friendship:refuse }
+    defaults: { _controller: 'Kiboko\Bundle\SocialNetworkBundle\Controller\FriendshipController::refuseAction' }
 
 kiboko_social_network_friendship_profil:
     path:  /{userId}/show
-    defaults: { _controller: KibokoSocialNetworkBundle:Profile:show }
+    defaults: { _controller: 'Kiboko\Bundle\SocialNetworkBundle\Controller\ProfileController::showAction' }
 
 kiboko_social_network_friendship_search_to_add:
     path:  /searchToAdd
-    defaults: { _controller: KibokoSocialNetworkBundle:Friendship:searchToAdd }
+    defaults: { _controller: 'Kiboko\Bundle\SocialNetworkBundle\Controller\FriendshipController::searchToAddAction' }
 
 kiboko_social_network_friendship_search:
     path:  /search
-    defaults: { _controller: KibokoSocialNetworkBundle:Friendship:search }
+    defaults: { _controller: 'Kiboko\Bundle\SocialNetworkBundle\Controller\FriendshipController::searchAction' }
 
 kiboko_social_network_friendship_list:
     path:  /
-    defaults: { _controller: KibokoSocialNetworkBundle:Friendship:list }
+    defaults: { _controller: 'Kiboko\Bundle\SocialNetworkBundle\Controller\FriendshipController::listAction' }

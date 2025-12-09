@@ -1,39 +1,39 @@
 kiboko_social_network_admin_users:
     path:  /
-    defaults: { _controller: KibokoSocialNetworkBundle:AdminUser:list }
+    defaults: { _controller: 'Kiboko\Bundle\SocialNetworkBundle\Controller\AdminUserController::listAction' }
 
 kiboko_social_network_admin_users_ban:
     path:  /{userId}/ban
-    defaults: { _controller: KibokoSocialNetworkBundle:AdminUser:ban }
+    defaults: { _controller: 'Kiboko\Bundle\SocialNetworkBundle\Controller\AdminUserController::banAction' }
 
 kiboko_social_network_admin_users_unban:
     path:  /{userId}/unban
-    defaults: { _controller: KibokoSocialNetworkBundle:AdminUser:ban }
+    defaults: { _controller: 'Kiboko\Bundle\SocialNetworkBundle\Controller\AdminUserController::banAction' }
 
 kiboko_social_network_admin_users_remove_avatar:
     path:  /{userId}/remove_avatar
-    defaults: { _controller: KibokoSocialNetworkBundle:AdminUser:removeAvatar }
+    defaults: { _controller: 'Kiboko\Bundle\SocialNetworkBundle\Controller\AdminUserController::removeAvatarAction' }
 
 kiboko_social_network_admin_users_init_password:
     path:  /{userId}/init-password
-    defaults: { _controller: KibokoSocialNetworkBundle:AdminUser:initPassword }
+    defaults: { _controller: 'Kiboko\Bundle\SocialNetworkBundle\Controller\AdminUserController::initPasswordAction' }
 
 kiboko_social_network_admin_users_contact:
     path:  /{userId}/contact
-    defaults: { _controller: KibokoSocialNetworkBundle:AdminUser:contact }
+    defaults: { _controller: 'Kiboko\Bundle\SocialNetworkBundle\Controller\AdminUserController::contactAction' }
 
 kiboko_social_network_admin_users_add:
     path:  /add
-    defaults: { _controller: KibokoSocialNetworkBundle:AdminUser:add }
+    defaults: { _controller: 'Kiboko\Bundle\SocialNetworkBundle\Controller\AdminUserController::addAction' }
 
 kiboko_social_network_admin_users_edit:
     path:  /{userId}/edit
-    defaults: { _controller: KibokoSocialNetworkBundle:AdminUser:add }
+    defaults: { _controller: 'Kiboko\Bundle\SocialNetworkBundle\Controller\AdminUserController::addAction' }
 
 kiboko_social_network_admin_users_remove:
     path:  /{userId}/remove
-    defaults: { _controller: KibokoSocialNetworkBundle:AdminUser:remove }
+    defaults: { _controller: 'Kiboko\Bundle\SocialNetworkBundle\Controller\AdminUserController::removeAction' }
 
 kiboko_social_network_admin_users_view:
     path:  /{userId}/view
-    defaults: { _controller: KibokoSocialNetworkBundle:AdminUser:view }
+    defaults: { _controller: 'Kiboko\Bundle\SocialNetworkBundle\Controller\AdminUserController::viewAction' }
