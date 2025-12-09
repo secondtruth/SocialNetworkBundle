@@ -10,14 +10,18 @@
 
 namespace Kiboko\Bundle\SocialNetworkBundle\Controller;
 
+use Doctrine\Persistence\ManagerRegistry;
 use Kiboko\Bundle\SocialNetworkBundle\Entity\User;
 use Kiboko\Bundle\SocialNetworkBundle\Entity\UserFriendship;
+use Kiboko\Bundle\SocialNetworkBundle\Mailer\FriendshipMailer;
 use Kiboko\Bundle\SocialNetworkBundle\Repository\UserFriendshipRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Friendship controller.
@@ -26,22 +30,29 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
  */
 class FriendshipController extends AbstractController
 {
+    public function __construct(
+        private ManagerRegistry $doctrine,
+        private PaginatorInterface $paginator,
+        private FriendshipMailer $friendshipMailer,
+        private TranslatorInterface $translator,
+        private int $maxRefusals
+    ) {
+    }
     /**
      * Friend user list page.
      */
-    public function listAction()
+    public function listAction(Request $request)
     {
-        $request = $this->get('request');
         $currentUser = $this->getUser();
         $page = $request->query->get('page', 1);
 
         /** @var UserFriendshipRepository $friendshipRepository */
-        $friendshipRepository = $this->getDoctrine()->getRepository('KibokoSocialNetworkBundle:UserFriendship');
+        $friendshipRepository = $this->doctrine->getRepository('KibokoSocialNetworkBundle:UserFriendship');
 
         return $this->render('KibokoSocialNetworkBundle:Friendship:list.html.twig',
             [
                 'friendsAsking' => $friendshipRepository->findAskingFriends($currentUser),
-                'friends' => $friendshipRepository->findAcceptedAndPendingFriends($currentUser, $page, $this->get('knp_paginator')),
+                'friends' => $friendshipRepository->findAcceptedAndPendingFriends($currentUser, $page, $this->paginator),
             ]
         );
     }
@@ -49,16 +60,15 @@ class FriendshipController extends AbstractController
     /**
      * Search to add new friend action.
      */
-    public function searchToAddAction()
+    public function searchToAddAction(Request $request)
     {
-        $request = $this->get('request');
         $pendingFriendshipsIDs = [];
         $users = null;
         $searchValue = $request->get('search');
         if (trim($searchValue) !== '') {
             $currentUser = $this->getUser();
-            $userRepository = $this->getDoctrine()->getRepository('KibokoSocialNetworkBundle:User');
-            $friendshipRepository = $this->getDoctrine()->getRepository('KibokoSocialNetworkBundle:UserFriendship');
+            $userRepository = $this->doctrine->getRepository('KibokoSocialNetworkBundle:User');
+            $friendshipRepository = $this->doctrine->getRepository('KibokoSocialNetworkBundle:UserFriendship');
             $excludeIDs = [$currentUser->getId()];
             $friendships = $friendshipRepository->findAcceptedAndRefusedFriends($currentUser);
             foreach ($friendships as $friendship) {
@@ -88,20 +98,20 @@ class FriendshipController extends AbstractController
     {
         if ($selectedFriends = $request->get('friends_id')) {
             $currentUser = $this->getUser();
-            $userRepository = $this->getDoctrine()->getRepository('KibokoSocialNetworkBundle:User');
-            $friendshipRepository = $this->getDoctrine()->getRepository('KibokoSocialNetworkBundle:UserFriendship');
-            $em = $this->getDoctrine()->getEntityManager();
+            $userRepository = $this->doctrine->getRepository('KibokoSocialNetworkBundle:User');
+            $friendshipRepository = $this->doctrine->getRepository('KibokoSocialNetworkBundle:UserFriendship');
+            $em = $this->doctrine->getManager();
             foreach ($selectedFriends as $selectedFriendId) {
                 $mayBeFriend = $userRepository->findOneById($selectedFriendId);
                 if ($usersFriendship = $friendshipRepository->findByUserAndFriendUser($currentUser, $mayBeFriend)) {
                     if ($usersFriendship[0]->getUserSrc() === $currentUser) {
-                        if ($usersFriendship[0]->getNbRefusals() >= $this->container->getParameter('kiboko_social_network.friendship.nb_refusals')) {
+                        if ($usersFriendship[0]->getNbRefusals() >= $this->maxRefusals) {
                             continue;
                         }
                         $friendship = $usersFriendship[0];
                         $friendship2 = $usersFriendship[1];
                     } else {
-                        if ($usersFriendship[1]->getNbRefusals() >= $this->container->getParameter('kiboko_social_network.friendship.nb_refusals')) {
+                        if ($usersFriendship[1]->getNbRefusals() >= $this->maxRefusals) {
                             continue;
                         }
                         $friendship = $usersFriendship[1];
@@ -119,12 +129,12 @@ class FriendshipController extends AbstractController
                 $friendship2->setStatus(UserFriendship::ASKING_STATUS);
                 $em->persist($friendship);
                 $em->persist($friendship2);
-                $this->get('kiboko_social_network.friendship_mailer')->sendInvitMessage($mayBeFriend);
+                $this->friendshipMailer->sendInvitMessage($mayBeFriend);
             }
             $em->persist($currentUser);
             $em->flush();
             $this->addFlash('notice',
-                    $this->get('translator')->trans(
+                    $this->translator->trans(
                             'kiboko_social.socialnetwork.invitation.success_msg',
                             [],
                             'friendship'
@@ -137,16 +147,15 @@ class FriendshipController extends AbstractController
     /**
      * Friend user invit page.
      */
-    public function invitAction($userId)
+    public function invitAction(Request $request, $userId)
     {
-        $request = $this->get('request');
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->doctrine->getManager();
         $currentUser = $this->getUser();
-        $user = $this->getDoctrine()->getRepository('KibokoSocialNetworkBundle:User')->find($userId);
+        $user = $this->doctrine->getRepository('KibokoSocialNetworkBundle:User')->find($userId);
         if (!$user->hasRole('ROLE_ADMIN')
           && !$user->hasRole('ROLE_SUPER_ADMIN')
           && !$user->hasRole('ROLE_GHOST')
-          && !$this->getDoctrine()->getRepository('KibokoSocialNetworkBundle:UserFriendship')->areFriends($currentUser, $user)
+          && !$this->doctrine->getRepository('KibokoSocialNetworkBundle:UserFriendship')->areFriends($currentUser, $user)
         ) {
             $friendship = new UserFriendship();
             $friendship->setUserSrc($currentUser);
@@ -177,15 +186,15 @@ class FriendshipController extends AbstractController
     public function acceptAction($userId)
     {
         $currentUser = $this->getUser();
-        $userRepository = $this->getDoctrine()->getRepository('KibokoSocialNetworkBundle:User');
+        $userRepository = $this->doctrine->getRepository('KibokoSocialNetworkBundle:User');
         if (!$user = $userRepository->find($userId)) {
             throw new NotFoundHttpException();
         }
-        $friendshipRepository = $this->getDoctrine()->getRepository('KibokoSocialNetworkBundle:UserFriendship');
+        $friendshipRepository = $this->doctrine->getRepository('KibokoSocialNetworkBundle:UserFriendship');
         if (!$usersFriendship = $friendshipRepository->findByUserAndFriendUser($currentUser, $user)) {
             throw new NotFoundHttpException();
         }
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->doctrine->getManager();
         foreach ($usersFriendship as $userFriendship) {
             $userFriendship->setNbRefusals(0);
             $userFriendship->setStatus(UserFriendship::ACCEPTED_STATUS);
@@ -193,9 +202,9 @@ class FriendshipController extends AbstractController
         }
         $em->flush();
 
-        $this->get('kiboko_social_network.friendship_mailer')->sendAcceptMessage($user);
+        $this->friendshipMailer->sendAcceptMessage($user);
         $this->addFlash('notice',
-                    $this->get('translator')->trans(
+                    $this->translator->trans(
                             'kiboko_social.socialnetwork.add.accepted_msg',
                             ['%username%' => $user->getUsername()],
                             'friendship'
@@ -213,20 +222,19 @@ class FriendshipController extends AbstractController
      *
      * @todo Send an email
      */
-    public function refuseAction($userId)
+    public function refuseAction(Request $request, $userId)
     {
-        $request = $this->get('request');
         $currentUser = $this->getUser();
-        $userRepository = $this->getDoctrine()->getRepository('KibokoSocialNetworkBundle:User');
+        $userRepository = $this->doctrine->getRepository('KibokoSocialNetworkBundle:User');
         if (!$user = $userRepository->find($userId)) {
             throw new NotFoundHttpException();
         }
-        $friendshipRepository = $this->getDoctrine()->getRepository('KibokoSocialNetworkBundle:UserFriendship');
+        $friendshipRepository = $this->doctrine->getRepository('KibokoSocialNetworkBundle:UserFriendship');
         if (!$usersFriendship = $friendshipRepository->findByUserAndFriendUser($currentUser, $user)) {
             throw new NotFoundHttpException();
         }
         $hasAcceptedBefore = false;
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->doctrine->getManager();
         foreach ($usersFriendship as $userFriendship) {
             if ($userFriendship->getStatus() === UserFriendship::ACCEPTED_STATUS) {
                 $hasAcceptedBefore = true;
@@ -234,7 +242,7 @@ class FriendshipController extends AbstractController
             $userFriendship->setStatus(UserFriendship::REFUSED_STATUS);
             if ($userFriendship->getUserTgt() === $currentUser) {
                 $nbRefusals = $userFriendship->getNbRefusals();
-                if ($nbRefusals >= $this->container->getParameter('kiboko_social_network.friendship.nb_refusals')) {
+                if ($nbRefusals >= $this->maxRefusals) {
                     $userFriendship->setStatus(UserFriendship::REMOVED_STATUS);
                 } else {
                     $userFriendship->setNbRefusals($userFriendship->getNbRefusals() + 1);
@@ -245,14 +253,14 @@ class FriendshipController extends AbstractController
         if ($request->get('confirm') === 'yes') {
             if ($hasAcceptedBefore) {
                 $message = 'kiboko_social.socialnetwork.add.remove_msg';
-                $this->get('kiboko_social_network.friendship_mailer')->sendRemoveInvitMessage($user);
+                $this->friendshipMailer->sendRemoveInvitMessage($user);
             } else {
                 $message = 'kiboko_social.socialnetwork.add.refused_msg';
-                $this->get('kiboko_social_network.friendship_mailer')->sendRefusalMessage($user);
+                $this->friendshipMailer->sendRefusalMessage($user);
             }
             $em->flush();
             $this->addFlash('notice',
-                    $this->get('translator')->trans(
+                    $this->translator->trans(
                             $message,
                             ['%username%' => $user->getUsername()],
                             'friendship'
@@ -266,7 +274,7 @@ class FriendshipController extends AbstractController
 
         return $this->render($templateName, [
             'action' => $this->generateUrl('kiboko_social_network_friendship_refuse', ['userId' => $userId]),
-            'confirmationMessage' => $this->get('translator')->trans(
+            'confirmationMessage' => $this->translator->trans(
                     $hasAcceptedBefore ? 'kiboko_social.socialnetwork.add.confirm_remove_msg' : 'kiboko_social.socialnetwork.add.confirm_refuse_msg',
                     [],
                     'friendship'
@@ -284,7 +292,7 @@ class FriendshipController extends AbstractController
     public function searchAction(Request $request)
     {
         if ($request->isXmlHttpRequest()) {
-            $foundedFriends = $this->getDoctrine()
+            $foundedFriends = $this->doctrine
                     ->getRepository('KibokoSocialNetworkBundle:UserFriendship')
                     ->searchFriend(
                             $this->getUser(),
@@ -300,15 +308,5 @@ class FriendshipController extends AbstractController
             return $response;
         }
         throw new AccessDeniedException();
-    }
-
-    /**
-     * Get current user.
-     *
-     * @return User
-     */
-    protected function getUser()
-    {
-        return $this->get('security.context')->getToken()->getUser();
     }
 }

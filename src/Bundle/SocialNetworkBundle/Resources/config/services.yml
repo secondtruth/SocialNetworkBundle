@@ -121,7 +121,7 @@ services:
         arguments:
             0: '@mailer'
             1: '@router'
-            2: '@templating'
+            2: '@twig'
             3:
                 registration.from_mail     : '%fos_user.registration.confirmation.from_email%'
                 registration.subject       : '%kiboko_social_network.registration.email.subject%'
@@ -142,7 +142,7 @@ services:
         arguments:
             0: '@mailer'
             1: '@router'
-            2: '@templating'
+            2: '@twig'
             3:
                 message.from          : '%kiboko_social_network.messenger.message.email.from%'
                 message.from_name     : '%kiboko_social_network.messenger.message.email.from_name%'
@@ -156,6 +156,36 @@ services:
                 answer.template.html  : '%kiboko_social_network.messenger.answer.email.html%'
         calls:
             - [ setMessenger, [ '@kiboko_social_network.messenger.messagebox' ] ]
+
+    # Controllers
+    Kiboko\Bundle\SocialNetworkBundle\Controller\AdminUserController:
+        arguments:
+            $security: '@security.helper'
+            $translator: '@translator'
+            $paginator: '@knp_paginator'
+            $userManager: '@fos_user.user_manager'
+            $fosMailer: '@kiboko_social_network.fos_mailer'
+            $contactMailer: '@kiboko_social_network.contact_mailer'
+            $avatarMailer: '@kiboko_social_network.avatar_mailer'
+            $doctrine: '@doctrine'
+            $container: '@service_container'
+        tags: ['controller.service_arguments']
+
+    Kiboko\Bundle\SocialNetworkBundle\Controller\FriendshipController:
+        arguments:
+            $doctrine: '@doctrine'
+            $paginator: '@knp_paginator'
+            $friendshipMailer: '@kiboko_social_network.friendship_mailer'
+            $translator: '@translator'
+            $maxRefusals: '%kiboko_social_network.friendship.nb_refusals%'
+        tags: ['controller.service_arguments']
+
+    Kiboko\Bundle\SocialNetworkBundle\Controller\MessengerController:
+        arguments:
+            $doctrine: '@doctrine'
+            $messengerMailer: '@kiboko_social_network.messenger_mailer'
+            $translator: '@translator'
+        tags: ['controller.service_arguments']
 
     # Messenger service
     kiboko_social_network.messenger.messagebox:
