@@ -24,7 +24,6 @@ use Kiboko\Bundle\SocialNetworkBundle\Repository\UserRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -47,8 +46,7 @@ class AdminUserController extends AbstractController
         private MailerInterface $fosMailer,
         private ContactMailer $contactMailer,
         private AvatarMailer $avatarMailer,
-        private ManagerRegistry $doctrine,
-        private ContainerInterface $container
+        private ManagerRegistry $doctrine
     ) {
     }
     /**
@@ -134,7 +132,7 @@ class AdminUserController extends AbstractController
         }
 
         $user = $userId === null ? new User() : $this->getSpecifiedUser($userId);
-        $form = $this->createForm(new AdminAccountFormType($this->container), $user);
+        $form = $this->createForm(new AdminAccountFormType($userId !== null), $user);
         $formHandler = new AdminAccountFormHandler(
             $this->userManager,
             $form,

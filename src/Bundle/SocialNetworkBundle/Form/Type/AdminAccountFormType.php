@@ -12,28 +12,26 @@ namespace Kiboko\Bundle\SocialNetworkBundle\Form\Type;
 
 use Kiboko\Bundle\SocialNetworkBundle\Entity\User;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\CallbackValidator;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormError;
-use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class AdminAccountFormType extends AbstractType
 {
-    private $container;
+    private bool $isUpdate;
 
     /**
      * Constructor.
      *
-     * @param object $container
+     * @param bool $isUpdate Whether this is an update (true) or create (false) operation
      */
-    public function __construct($container)
+    public function __construct(bool $isUpdate = false)
     {
-        $this->container = $container;
+        $this->isUpdate = $isUpdate;
     }
 
     /**
@@ -43,37 +41,34 @@ class AdminAccountFormType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $container = $this->container;
         $builder
             ->add('username', TextType::class, [
                 'required' => true,
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'kiboko_social.socialnetwork.add.username.not_blank',
+                    ]),
+                ],
             ])
             ->add('email', EmailType::class, [
                 'required' => true,
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'kiboko_social.socialnetwork.add.email.not_blank',
+                    ]),
+                ],
             ])
             ->add('newPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'invalid_message' => 'kiboko_social.socialnetwork.add.password.no_match',
-                'required' => false,
+                'required' => !$this->isUpdate,
                 'property_path' => false,
+                'constraints' => !$this->isUpdate ? [
+                    new NotBlank([
+                        'message' => 'kiboko_social.socialnetwork.add.password.not_blank',
+                    ]),
+                ] : [],
             ])
-            ->add('avatarFile', FileType::class, ['required' => false])
-            ->addValidator(new CallbackValidator(function (FormInterface $form) use ($container) {
-                $request = $container->get('request');
-                $isUpdate = $request->get('userId') ? true : false;
-                $usernameField = $form->get('username');
-                if (trim($usernameField->getData()) === '') {
-                    $usernameField->addError(new FormError('kiboko_social.socialnetwork.add.username.not_blank'));
-                }
-                $emailField = $form->get('email');
-                if (trim($emailField->getData()) === '') {
-                    $emailField->addError(new FormError('kiboko_social.socialnetwork.add.email.not_blank'));
-                }
-                $newPasswordField = $form->get('newPassword')->get('first');
-                if (!$isUpdate && trim($newPasswordField->getData()) === '') {
-                    $newPasswordField->addError(new FormError('kiboko_social.socialnetwork.add.password.not_blank'));
-                }
-            })
-        );
+            ->add('avatarFile', FileType::class, ['required' => false]);
     }
 }

@@ -168,7 +168,6 @@ services:
             $contactMailer: '@kiboko_social_network.contact_mailer'
             $avatarMailer: '@kiboko_social_network.avatar_mailer'
             $doctrine: '@doctrine'
-            $container: '@service_container'
         tags: ['controller.service_arguments']
 
     Kiboko\Bundle\SocialNetworkBundle\Controller\FriendshipController:
