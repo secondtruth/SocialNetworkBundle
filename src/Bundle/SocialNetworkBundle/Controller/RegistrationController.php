@@ -32,7 +32,7 @@ class RegistrationController extends Controller
         }
         // We set an notice flash and an email
         $this->container->get('kiboko_social_network.fos_mailer')->sendRegistrationEmailMessage($user);
-        $this->container->get('session')->setFlash('notice', 'kiboko_social.socialnetwork.register.welcome_msg');
+        $this->addFlash('notice', 'kiboko_social.socialnetwork.register.welcome_msg');
         // We redirect to homepage
         return new RedirectResponse($this->container->get('router')->generate('kiboko_social_network_homepage'));
     }

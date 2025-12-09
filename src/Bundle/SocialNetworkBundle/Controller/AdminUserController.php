@@ -122,7 +122,7 @@ class AdminUserController extends AbstractController
         );
 
         if ($formHandler->process($user)) {
-            $this->get('session')->setFlash('notice',
+            $this->addFlash('notice',
                 $this->get('translator')
                     ->trans('kiboko_social.socialnetwork.'.($userId === null ? 'add' : 'edit').'.success', [], 'admin_user')
             );
@@ -157,7 +157,7 @@ class AdminUserController extends AbstractController
             if ($request->get('confirm') === 'yes') {
                 $userManager = $this->container->get('fos_user.user_manager');
                 $userManager->deleteUser($user);
-                $this->container->get('session')->setFlash(
+                $this->addFlash(
                     'success',
                     $this->get('translator')->trans(
                         'kiboko_social.socialnetwork.remove.success',
@@ -211,7 +211,7 @@ class AdminUserController extends AbstractController
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($user);
                 $em->flush();
-                $this->container->get('session')->setFlash(
+                $this->addFlash(
                     'success',
                     $this->get('translator')->trans(
                         'kiboko_social.socialnetwork.'.($isEnabled ? 'ban' : 'unban').'.success',
@@ -261,7 +261,7 @@ class AdminUserController extends AbstractController
             $request
         );
         if ($formHandler->process($user)) {
-            $this->container->get('session')->setFlash(
+            $this->addFlash(
                 'notice',
                 $this->get('translator')->trans(
                     'kiboko_social.socialnetwork.contact.success',
@@ -295,7 +295,7 @@ class AdminUserController extends AbstractController
         $this->container->get('fos_user.mailer')->sendResettingEmailMessage($user);
         $user->setPasswordRequestedAt(new \DateTime());
         $this->container->get('fos_user.user_manager')->updateUser($user);
-        $this->container->get('session')->setFlash(
+        $this->addFlash(
             'success',
             $this->get('translator')->trans(
                 'kiboko_social.socialnetwork.password_init.success',
@@ -330,7 +330,7 @@ class AdminUserController extends AbstractController
             $em->flush();
             $this->container->get('kiboko_social_network.avatar_mailer')
                 ->sendAdminMessage($user);
-            $this->container->get('session')->setFlash(
+            $this->addFlash(
                 'success',
                 $this->get('translator')->trans(
                     'kiboko_social.socialnetwork.remove_avatar.success',

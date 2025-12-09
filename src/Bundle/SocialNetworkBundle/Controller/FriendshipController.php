@@ -123,7 +123,7 @@ class FriendshipController extends AbstractController
             }
             $em->persist($currentUser);
             $em->flush();
-            $this->get('session')->setFlash('notice',
+            $this->addFlash('notice',
                     $this->get('translator')->trans(
                             'kiboko_social.socialnetwork.invitation.success_msg',
                             [],
@@ -194,7 +194,7 @@ class FriendshipController extends AbstractController
         $em->flush();
 
         $this->get('kiboko_social_network.friendship_mailer')->sendAcceptMessage($user);
-        $this->get('session')->setFlash('notice',
+        $this->addFlash('notice',
                     $this->get('translator')->trans(
                             'kiboko_social.socialnetwork.add.accepted_msg',
                             ['%username%' => $user->getUsername()],
@@ -251,7 +251,7 @@ class FriendshipController extends AbstractController
                 $this->get('kiboko_social_network.friendship_mailer')->sendRefusalMessage($user);
             }
             $em->flush();
-            $this->get('session')->setFlash('notice',
+            $this->addFlash('notice',
                     $this->get('translator')->trans(
                             $message,
                             ['%username%' => $user->getUsername()],

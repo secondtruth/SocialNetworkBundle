@@ -64,7 +64,7 @@ class MessengerController extends AbstractController
                 $this->container->get('kiboko_social_network.messenger_mailer')
         );
         if ($formHandler->process($currentUser)) {
-            $this->get('session')->setFlash(
+            $this->addFlash(
                     'success',
                     $this->get('translator')->trans(
                             'kiboko_social.socialnetwork.new_message.success_msg',
@@ -107,7 +107,7 @@ class MessengerController extends AbstractController
                     $this->container->get('kiboko_social_network.messenger_mailer')
             );
             if ($formHandler->process($message, $currentUser, $data['participants'])) {
-                $this->get('session')->setFlash(
+                $this->addFlash(
                         'success',
                         $this->get('translator')->trans(
                                 'kiboko_social.socialnetwork.answer_message.success_msg',
@@ -161,7 +161,7 @@ class MessengerController extends AbstractController
                 // If there s some users who don't remove message, we just remove current user link with message
                 $messageRepository->removeUserMessageRelation($msgId, $currentUser);
             }
-            $this->get('session')->setFlash(
+            $this->addFlash(
                     'success',
                     $this->get('translator')->trans(
                             'kiboko_social.socialnetwork.remove_message.success_msg',
